@@ -2,6 +2,7 @@ import {Bar} from 'react-chartjs-2';
 import {Chart,registerables} from 'chart.js';
 import {useState} from 'react'
 import '../style/style.scss';
+import { setDatasets } from 'react-chartjs-2/dist/utils';
 
 Chart.register(...registerables)
 
@@ -23,17 +24,25 @@ const BarChart = (props:BarChartProps) => {
   console.log(keysOfObj);
   
   const [userData ,setUserData] = useState({
-      labels: dataSaved.map((data:any) => `${data[' "Year"']}`),
+      labels: dataSaved.map((data:any) => `${data[`${keysOfObj[0]}`]}`),
       datasets: [{
         label: "Users Gained",
-        data: dataSaved.map((data:any) => `${data[' "List Price ($)"']}`),
+        data: dataSaved.map((data:any) => `${data[`${keysOfObj[3]}`]}`),
         backgroundColor: ["red" , "black" ,"green" , "pink", "yellow"]
       } 
     ]
     })
 
-    function setLabel(ev:any){
+    async function setLabel(ev:any){
       const label = ev.target.id;
+      await setChosenLabel(label)
+      console.log(label)
+      const tempData=userData
+      tempData.labels=dataSaved.map((data:any) => `${data[`${chosenlabel }`]}`)
+      
+      setUserData(tempData)
+      
+   
     }
     
 
