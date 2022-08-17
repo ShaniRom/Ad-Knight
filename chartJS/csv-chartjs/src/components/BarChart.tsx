@@ -3,7 +3,7 @@ import {Chart,registerables} from 'chart.js';
 import {useState} from 'react'
 import '../style/style.scss';
 import { setDatasets } from 'react-chartjs-2/dist/utils';
-
+import { CSVLink } from 'react-csv';
 Chart.register(...registerables)
 
 
@@ -62,8 +62,10 @@ const BarChart = (props:BarChartProps) => {
       {keysOfObj.map((title,i) => {
         return (
           <button className='btns-btn' key={i} id={title} onClick={setLabel}>{title}</button>
+          
         )
       })}
+      <CSVLink data={dataSaved}>Export CSV</CSVLink>;
       </div>
 
   
