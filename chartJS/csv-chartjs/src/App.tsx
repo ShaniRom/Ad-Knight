@@ -8,8 +8,7 @@ import {Chart , registerables} from 'chart.js'
 import Papa from 'papaparse'
 import { ListFormat } from 'typescript';
 import { FileHandle } from 'fs/promises';
-
-
+import { CSVLink } from 'react-csv';
 
 const allowedExtensions = ["csv"];
 
@@ -78,7 +77,8 @@ const [userData ,setUserData] = useState({
       
       {fileAdded?null:<input type="file" name="csvFile" accept=".csv" onChange={getCsvFile} />}
       {/* <input type="file" name="csvFile" accept=".csv" onChange={getCsvFile} /> */}
-
+   
+ 
     </div>
   );
 }
