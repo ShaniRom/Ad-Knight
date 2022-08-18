@@ -1,10 +1,11 @@
-import { Bar } from "react-chartjs-2";
-import { Chart, registerables } from "chart.js";
 import { useState, useEffect } from "react";
-import "../style/style.scss";
-import { setDatasets } from "react-chartjs-2/dist/utils";
+import {Bar} from 'react-chartjs-2';
+import {Chart,registerables} from 'chart.js';
+import '../style/style.scss';
+import { setDatasets } from 'react-chartjs-2/dist/utils';
+import { CSVLink } from 'react-csv';
+Chart.register(...registerables)
 
-Chart.register(...registerables);
 
 interface BarChartProps {
   dataSaved: any;
@@ -97,6 +98,7 @@ const BarChart = (props: BarChartProps) => {
             scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
           }}
         />
+     
       </div>
 
       <div className="btns">
@@ -107,6 +109,7 @@ const BarChart = (props: BarChartProps) => {
             </button>
           );
         })}
+         <CSVLink data={dataSaved}>Export CSV</CSVLink>;
       </div>
     </>
   );
