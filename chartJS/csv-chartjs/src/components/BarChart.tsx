@@ -1,75 +1,115 @@
-import {Bar} from 'react-chartjs-2';
-import {Chart,registerables} from 'chart.js';
-import {useState} from 'react'
-import '../style/style.scss';
-import { setDatasets } from 'react-chartjs-2/dist/utils';
+import { Bar } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
+import { useState, useEffect } from "react";
+import "../style/style.scss";
+import { setDatasets } from "react-chartjs-2/dist/utils";
 
-Chart.register(...registerables)
+Chart.register(...registerables);
 
-
-interface BarChartProps{
-  dataSaved:any;
-  labels:any;
-  keysOfObj:Array<any>;
+interface BarChartProps {
+  dataSaved: any;
+  labels: any;
+  keysOfObj: Array<any>;
 }
 
-const BarChart = (props:BarChartProps) => {
+//----- checks if label is date and turns the timestamp into actual date and time
 
-  const {dataSaved,labels,keysOfObj} = props;
+//   let timestamp = 1607110465663;
+//   let date = new Date(timestamp);
 
-  const [chosenlabel , setChosenLabel] = useState("")
+//   console.log(
+//     "Date: " +
+//       date.getDate() +
+//       "/" +
+//       (date.getMonth() + 1) +
+//       "/" +
+//       date.getFullYear() +
+//       " " +
+//       date.getHours() +
+//       ":" +
+//       date.getMinutes() +
+//       ":" +
+//       date.getSeconds()
+//   );
+// console.log(date)
+
+const BarChart = (props: BarChartProps) => {
+  let { dataSaved, labels, keysOfObj } = props;
+
+  let [chosenlabel, setChosenLabel] = useState("");
 
   console.log(dataSaved);
-  
-  console.log(keysOfObj);
-  
-  const [userData ,setUserData] = useState({
-      labels: dataSaved.map((data:any) => `${data[`${keysOfObj[0]}`]}`),
-      datasets: [{
-        label: "Users Gained",
-        data: dataSaved.map((data:any) => `${data[`${keysOfObj[3]}`]}`),
-        backgroundColor: ["red" , "black" ,"green" , "pink", "yellow"]
-      } 
-    ]
-    })
 
-    async function setLabel(ev:any){
-      const label = ev.target.id;
-      await setChosenLabel(label)
-      console.log(label)
-      const tempData=userData
-      tempData.labels=dataSaved.map((data:any) => `${data[`${chosenlabel }`]}`)
-      
-      setUserData(tempData)
-      
-   
-    }
-    
+  console.log(keysOfObj);
+
+  const [userData, setUserData] = useState({
+    labels: dataSaved.map((data: any) => `${data[`${keysOfObj[0]}`]}`),
+
+    datasets: [
+      {
+        label: "Users Gained",
+
+        data: dataSaved.map((data: any) => `${data[`${keysOfObj[3]}`]}`),
+        backgroundColor: ["red", "black", "green", "pink", "yellow"],
+      },
+    ],
+  });
+  useEffect(() => {}, [setLabel]);
+  function setLabel(ev: any) {
+    const label = ev.target.id;
+    setChosenLabel(label);
+    console.log(label);
+    const tempData = userData;
+
+    // if (chosenlabel ===' "Date"') {
+
+    //   // const timeStamp = tempData.labels.chosenlabel;
+    //  let date = new Date(chosenlabel);
+    //   console.log(
+    //     "Date: " +
+    //       date.getDate() +
+    //       "/" +
+    //       (date.getMonth() + 1) +
+    //       "/" +
+    //       date.getFullYear() +
+    //       " " +
+    //       date.getHours() +
+    //       ":" +
+    //       date.getMinutes() +
+    //       ":" +
+    //       date.getSeconds()
+    //   );
+    //   tempData.labels = dataSaved.map((data: any) => `${data[`${label}`]}`);
+    // }else{
+    tempData.labels = dataSaved.map((data: any) => `${data[`${label}`]}`);
+
+    setUserData(tempData);
+  }
 
   return (
-      <>
-      
-      <div className='chart'>
-      <Bar style={{width:500,height:500}} data={userData}
-     options={{
-        maintainAspectRatio:false,
-        scales:{x:{beginAtZero:true},y:{beginAtZero:true}}
-
-}} />
-</div>
-
-<div className='btns'>
-      {keysOfObj.map((title,i) => {
-        return (
-          <button className='btns-btn' key={i} id={title} onClick={setLabel}>{title}</button>
-        )
-      })}
+    <>
+      <div className="chart">
+        <Bar
+          style={{ width: 500, height: 500 }}
+          data={userData}
+          options={{
+            maintainAspectRatio: false,
+            scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
+          }}
+        />
       </div>
 
-  
+      <div className="btns">
+        {keysOfObj.map((title, i) => {
+          return (
+            <button className="btns-btn" key={i} id={title} onClick={setLabel}>
+              {title}
+            </button>
+          );
+        })}
+      </div>
     </>
-  )
+  );
+};
 
-}
-
-export default BarChart
+export default BarChart;
