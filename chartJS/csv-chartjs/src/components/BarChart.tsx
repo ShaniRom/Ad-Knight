@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
+import { useCSVDownloader } from 'react-papaparse';
 import {Bar} from 'react-chartjs-2';
 import {Chart,registerables} from 'chart.js';
+import Papa from 'papaparse'
 import '../style/style.scss';
 import { setDatasets } from 'react-chartjs-2/dist/utils';
 import { CSVLink } from 'react-csv';
+// import CSVDownloader from "./CSVDownloader";
 Chart.register(...registerables)
+
+
 
 
 interface BarChartProps {
@@ -42,31 +47,31 @@ const BarChart = (props: BarChartProps) => {
   console.log(dataSaved);
 
   console.log(keysOfObj);
-<<<<<<< HEAD
+//<<<<<<< HEAD
   
-  const [userData ,setUserData] = useState({
-      labels: dataSaved.map((data:any) => `${data[`First name`]} ${data[`Last name`]}`),
-      datasets: [{
-        label: "Users Gained",
-        data: dataSaved.map((data:any) => `${data[`Identifier`]}`),
-        backgroundColor: ["red" , "black" ,"green" , "pink", "yellow"]
-      } 
-    ]
-    })
+  // const [userData ,setUserData] = useState({
+  //     labels: dataSaved.map((data:any) => `${data[`First name`]} ${data[`Last name`]}`),
+  //     datasets: [{
+  //       label: "Users Gained",
+  //       data: dataSaved.map((data:any) => `${data[`Identifier`]}`),
+  //       backgroundColor: ["red" , "black" ,"green" , "pink", "yellow"]
+  //     } 
+  //   ]
+  //   })
 
-    async function setLabel(ev:any){
-      const label = ev.target.id;
-      await setChosenLabel(label)
-      console.log(label)
-      const tempData = userData
-      tempData.labels= dataSaved.map((data:any) => `${data[chosenlabel]}`)
+    // async function setLabel(ev:any){
+    //   const label = ev.target.id;
+    //   await setChosenLabel(label)
+    //   console.log(label)
+    //   const tempData = userData
+    //   tempData.labels= dataSaved.map((data:any) => `${data[chosenlabel]}`)
       
-      setUserData(tempData)
+    //   setUserData(tempData)
       
    
-    }
+    // }
     
-=======
+//=======
 
   const [userData, setUserData] = useState({
     labels: dataSaved.map((data: any) => `${data[`${keysOfObj[0]}`]}`),
@@ -111,8 +116,29 @@ const BarChart = (props: BarChartProps) => {
 
     setUserData(tempData);
   }
->>>>>>> adknight
+//>>>>>>> adknight
+// function handleDownload(savedData:any){
 
+
+// let csv = Papa.unparse({
+//    savedData
+    
+// });
+
+
+// const blob = new Blob([csv]);
+
+// const a = document.createElement('a');
+// a.href = URL.createObjectURL(blob);
+
+
+// a.download = 'CSV Export File';
+
+
+// document.body.appendChild(a);
+// a.click();
+// document.body.removeChild(a);
+// }
   return (
     <>
       <div className="chart">
@@ -136,6 +162,8 @@ const BarChart = (props: BarChartProps) => {
           );
         })}
          <CSVLink data={dataSaved}>Export CSV</CSVLink>;
+{/* <button onClick={(savedData)=>handleDownload(savedData)}>Download To CSV</button>
+         */}
       </div>
     </>
   );
