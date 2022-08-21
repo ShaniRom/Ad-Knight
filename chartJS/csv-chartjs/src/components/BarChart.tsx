@@ -1,16 +1,13 @@
-import { useState, useEffect } from "react";
-import { useCSVDownloader } from 'react-papaparse';
-import {Bar} from 'react-chartjs-2';
-import {Chart,registerables} from 'chart.js';
-import Papa from 'papaparse'
-import '../style/style.scss';
-import { setDatasets } from 'react-chartjs-2/dist/utils';
-import { CSVLink } from 'react-csv';
+import { useState, useEffect, useRef } from "react";
+import { useCSVDownloader } from "react-papaparse";
+import { Bar } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
+import Papa from "papaparse";
+import "../style/style.scss";
+import { setDatasets } from "react-chartjs-2/dist/utils";
+import { CSVLink } from "react-csv";
 // import CSVDownloader from "./CSVDownloader";
-Chart.register(...registerables)
-
-
-
+Chart.register(...registerables);
 
 interface BarChartProps {
   dataSaved: any;
@@ -47,31 +44,16 @@ const BarChart = (props: BarChartProps) => {
   console.log(dataSaved);
 
   console.log(keysOfObj);
-//<<<<<<< HEAD
-  
+
   // const [userData ,setUserData] = useState({
   //     labels: dataSaved.map((data:any) => `${data[`First name`]} ${data[`Last name`]}`),
   //     datasets: [{
   //       label: "Users Gained",
   //       data: dataSaved.map((data:any) => `${data[`Identifier`]}`),
   //       backgroundColor: ["red" , "black" ,"green" , "pink", "yellow"]
-  //     } 
+  //     }
   //   ]
   //   })
-
-    // async function setLabel(ev:any){
-    //   const label = ev.target.id;
-    //   await setChosenLabel(label)
-    //   console.log(label)
-    //   const tempData = userData
-    //   tempData.labels= dataSaved.map((data:any) => `${data[chosenlabel]}`)
-      
-    //   setUserData(tempData)
-      
-   
-    // }
-    
-//=======
 
   const [userData, setUserData] = useState({
     labels: dataSaved.map((data: any) => `${data[`${keysOfObj[0]}`]}`),
@@ -116,33 +98,42 @@ const BarChart = (props: BarChartProps) => {
 
     setUserData(tempData);
   }
-//>>>>>>> adknight
-// function handleDownload(savedData:any){
+  //>>>>>>> adknight
+  // function handleDownload(savedData:any){
 
+  // let csv = Papa.unparse({
+  //    savedData
 
-// let csv = Papa.unparse({
-//    savedData
-    
-// });
+  // });
 
+  // const blob = new Blob([csv]);
 
-// const blob = new Blob([csv]);
+  // const a = document.createElement('a');
+  // a.href = URL.createObjectURL(blob);
 
-// const a = document.createElement('a');
-// a.href = URL.createObjectURL(blob);
+  // a.download = 'CSV Export File';
 
-
-// a.download = 'CSV Export File';
-
-
-// document.body.appendChild(a);
-// a.click();
-// document.body.removeChild(a);
-// }
+  // document.body.appendChild(a);
+  // a.click();
+  // document.body.removeChild(a);
+  // }
+  const chartRef: any = useRef(null);
+  function handleDownloadToImg() {
+    // const imageLink=document.createElement('a');
+    // const canvas = document.getElementById('chart') as HTMLCanvasElement
+    // imageLink.href= canvas.toDataURL('image/png',1);
+    // document.write('<img src="'+imageLink+'"/>')
+    // console.log(imageLink.href)
+    const link = document.createElement("a");
+    link.download = "chart.png";
+    link.href = chartRef.current.toBase64Image("image/png", 1);
+    link.click();
+  }
   return (
     <>
       <div className="chart">
         <Bar
+          ref={chartRef}
           style={{ width: 500, height: 500 }}
           data={userData}
           options={{
@@ -150,7 +141,6 @@ const BarChart = (props: BarChartProps) => {
             scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
           }}
         />
-     
       </div>
 
       <div className="btns">
@@ -161,10 +151,11 @@ const BarChart = (props: BarChartProps) => {
             </button>
           );
         })}
-         <CSVLink data={dataSaved}>Export CSV</CSVLink>;
-{/* <button onClick={(savedData)=>handleDownload(savedData)}>Download To CSV</button>
+        <CSVLink data={dataSaved}>Export CSV</CSVLink>;
+        {/* <button onClick={(savedData)=>handleDownload(savedData)}>Download To CSV</button>
          */}
       </div>
+      <button onClick={handleDownloadToImg}>Download</button>
     </>
   );
 };
