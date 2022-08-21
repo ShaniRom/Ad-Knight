@@ -128,10 +128,15 @@ const BarChart = (props: BarChartProps) => {
     link.download = "chart.png";
     link.href = chartRef.current.toBase64Image("image/png", 1);
     link.click();
-  }
+    console.log(link)
+    // const ctx:any = document.getElementById('chartImg')
+    // ctx.getContext('2d');
+    // ctx.fillStyle = 'rgb(255, 221, 0)';
+    // ctx.fillRect(255, 221, 0);
+  } 
   return (
     <>
-      <div className="chart">
+      <div className="chart" id='chartImg'>
         <Bar
           ref={chartRef}
           style={{ width: 500, height: 500 }}

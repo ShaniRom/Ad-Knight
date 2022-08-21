@@ -28,8 +28,23 @@ function App() {
         data: UserData.map((data) => data.profits),
         backgroundColor: ["red", "black", "green", "pink"],
       },
-    ],
-  });
+    ]
+    // ,plugins:{
+    //   id: 'custom_canvas_background_color',
+    //   beforeDraw: (chart:any, args:any, options:any) => {
+    //       const {ctx} = chart;
+    //       ctx.save();
+    //       ctx.globalCompositeOperation = 'destination-over';
+    //       ctx.fillStyle = options.color;
+    //       ctx.fillRect(0, 0, chart.width, chart.height);
+    //       ctx.restore();
+    //   },
+    //   defaults: {
+    //       color: 'lightGreen'
+    //   }
+    // }
+  }
+  );
 
   async function getCsvFile(ev: any) {
     const newFile = ev.target.files[0];
