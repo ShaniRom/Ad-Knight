@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useCSVDownloader } from "react-papaparse";
 import Papa from "papaparse";
 // import CSVDownloader from "./CSVDownloader";
-Chart.register(...registerables);
 import {Bar,getElementAtEvent ,Doughnut} from 'react-chartjs-2';
 import {Chart,registerables} from 'chart.js';
 import '../style/style.scss';
@@ -10,7 +9,8 @@ import { setDatasets } from 'react-chartjs-2/dist/utils';
 import { CSVLink } from 'react-csv';
 import Table from "./Table";
 import Form from "./Form";
-Chart.register(...registerables)
+// import {colors} from "../features/colors"
+Chart.register(...registerables);
 
 interface BarChartProps {
   dataSaved: any;
@@ -69,7 +69,6 @@ const BarChart = (props: BarChartProps) => {
 // set colors by values
 
     useEffect(() => {
-      
       dataSaved.map((obj:any) => {
         let tempColor;
         let int = parseFloat(obj.MAM)
@@ -84,6 +83,8 @@ const BarChart = (props: BarChartProps) => {
         }
         backgroundcolor.push(tempColor)
       })
+    
+      // setBackGroundColor(colors(dataSaved))
       
 
         } ,[])
@@ -196,9 +197,11 @@ const BarChart = (props: BarChartProps) => {
             scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
           }}
         />
-      </div>
-          {/* <Form userData={userData} setUserData={setUserData} dataSaved={dataSaved}/> */}
+        </div>
+      
+          <Form userData={userData} setUserData={setUserData} dataSaved={dataSaved}/>
           <Table chartClicked={chartClicked} chartData={chartData} keysOfObj={keysOfObj}/>
+          
       {/* <div className="btns">
         {keysOfObj.map((title, i) => {
           return (
@@ -214,7 +217,8 @@ const BarChart = (props: BarChartProps) => {
          <button onClick={(CSVdata)=>handleDownload(CSVdata)}>Download To CSV</button>
       <button onClick={handleDownloadToImg}>Download To Image</button>
     </>
+    
   );
-};
+}
 
-export default BarChart;
+export default BarChart

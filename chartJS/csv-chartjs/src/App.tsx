@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import { Doughnut } from "react-chartjs-2";
 import BarChart from "./components/BarChart";
@@ -9,7 +8,6 @@ import Papa from "papaparse";
 import { ListFormat } from "typescript";
 import { FileHandle } from "fs/promises";
 import { CSVLink } from "react-csv";
-
 const allowedExtensions = ["csv"];
 
 function App() {

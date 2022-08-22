@@ -21,7 +21,7 @@ const {setUserData,dataSaved,userData} = props;
         const tempChartData = userData;
         tempChartData.labels = tempData.map((data:any) => data["Year"])
         tempChartData.datasets.data = tempData.map((data:any) => data.MAM)
-        console.log(tempChartData.datasets.data);
+        console.log(tempChartData)
         
 
         setUserData(tempChartData)
