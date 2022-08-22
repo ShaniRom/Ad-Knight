@@ -1,3 +1,8 @@
+import { useState, useEffect, useRef } from "react";
+import { useCSVDownloader } from "react-papaparse";
+import Papa from "papaparse";
+// import CSVDownloader from "./CSVDownloader";
+Chart.register(...registerables);
 import { useState, useEffect ,useRef } from "react";
 import {Bar,getElementAtEvent ,Doughnut} from 'react-chartjs-2';
 import {Chart,registerables} from 'chart.js';
@@ -7,7 +12,6 @@ import { CSVLink } from 'react-csv';
 import Table from "./Table";
 import Form from "./Form";
 Chart.register(...registerables)
-
 
 interface BarChartProps {
   dataSaved: any;
@@ -147,7 +151,7 @@ const BarChart = (props: BarChartProps) => {
 
   return (
     <>
-      <div className="chart" >
+      <div className="chart" id='chartImg'>
         <Bar
           style={{ width: 500, height: 350 }}
           ref={chartRef}
@@ -158,7 +162,6 @@ const BarChart = (props: BarChartProps) => {
             scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
           }}
         />
-     
       </div>
           {/* <Form userData={userData} setUserData={setUserData} dataSaved={dataSaved}/> */}
           <Table chartClicked={chartClicked} chartData={chartData} keysOfObj={keysOfObj}/>
@@ -170,8 +173,11 @@ const BarChart = (props: BarChartProps) => {
             </button>
           );
         })}
-         <CSVLink data={dataSaved}>Export CSV</CSVLink>;
-      </div> */}
+        <CSVLink data={dataSaved}>Export CSV</CSVLink>;
+        {/* <button onClick={(savedData)=>handleDownload(savedData)}>Download To CSV</button>
+         */}
+      </div>
+      <button onClick={handleDownloadToImg}>Download</button>
     </>
   );
 };
