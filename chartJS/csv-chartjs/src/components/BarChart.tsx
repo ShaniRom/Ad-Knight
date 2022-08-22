@@ -162,30 +162,17 @@ const BarChart = (props: BarChartProps) => {
     
     console.log(dataTemp);
     
-  
+    const templist = dataTemp.map((obj:any,i:number) => {
+      return (
+      {
+        "Year": obj.Year,
+        "MAM" : obj.mam
+      }
+      )
+    })
    
-    let csv = Papa.unparse([
-      dataTemp.map((obj:any,i:number) => {
-        return (
-        {
-          "Year": obj.Year,
-          "MAM" : obj.mam
-        }
-        )
-      })
-    ]);
+  let csv = Papa.unparse(templist);
       
-      
-
-  //   const data = userData.labels.map(obj => [
-  //     obj
-  //     obj.title,
-  //     obj.description
-  // ])
-
-    
-  
-
   const blob = new Blob([csv]);
 
   const a = document.createElement('a');
