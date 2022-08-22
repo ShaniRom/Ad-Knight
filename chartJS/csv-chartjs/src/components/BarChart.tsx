@@ -3,7 +3,6 @@ import { useCSVDownloader } from "react-papaparse";
 import Papa from "papaparse";
 // import CSVDownloader from "./CSVDownloader";
 Chart.register(...registerables);
-import { useState, useEffect ,useRef } from "react";
 import {Bar,getElementAtEvent ,Doughnut} from 'react-chartjs-2';
 import {Chart,registerables} from 'chart.js';
 import '../style/style.scss';
@@ -47,7 +46,7 @@ const BarChart = (props: BarChartProps) => {
 
   // console.log(dataSaved);
   
-  const chartRef:any = useRef();
+ 
   let [CSVdata, setCSVdata] = useState(dataSaved);
   let [backgroundcolor , setBackGroundColor] = useState<any>([])
   let [chartClicked, setChartClicked] = useState(false);
@@ -55,7 +54,7 @@ const BarChart = (props: BarChartProps) => {
   let [choseYears , setChoseYears] = useState(false)  
   let [chartData, setChartData] = useState<any>();
   let [chosenlabel, setChosenLabel] = useState("");
-
+  const chartRef: any = useRef(null);
   
   const [userData ,setUserData] = useState({
       labels: CSVdata.map((data:any) => `${data["Year"]}`),
@@ -148,6 +147,41 @@ const BarChart = (props: BarChartProps) => {
   //   setUserData(tempData);
   // }
 
+  function handleDownload(CSVdata:any){
+
+  let csv = Papa.unparse({
+    data:[CSVdata],
+    fields:[labels]
+  });
+
+  const blob = new Blob([csv]);
+
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+
+  a.download = 'CSVExportFile.csv';
+
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  }
+
+  function handleDownloadToImg() {
+    // const imageLink=document.createElement('a');
+    // const canvas = document.getElementById('chart') as HTMLCanvasElement
+    // imageLink.href= canvas.toDataURL('image/png',1);
+    // document.write('<img src="'+imageLink+'"/>')
+    // console.log(imageLink.href)
+    const link = document.createElement("a");
+    link.download = "chart.png";
+    link.href = chartRef.current.toBase64Image("image/png", 1);
+    link.click();
+    console.log(link)
+    // const ctx:any = document.getElementById('chartImg')
+    // ctx.getContext('2d');
+    // ctx.fillStyle = 'rgb(255, 221, 0)';
+    // ctx.fillRect(255, 221, 0);
+  }
 
   return (
     <>
@@ -172,12 +206,13 @@ const BarChart = (props: BarChartProps) => {
               {title}
             </button>
           );
-        })}
-        <CSVLink data={dataSaved}>Export CSV</CSVLink>;
-        {/* <button onClick={(savedData)=>handleDownload(savedData)}>Download To CSV</button>
-         */}
-      </div>
-      <button onClick={handleDownloadToImg}>Download</button>
+        })}*/}
+
+        
+      {/* </div>  */}
+             {/* <CSVLink data={dataSaved}>Export CSV</CSVLink>; */}
+         <button onClick={(CSVdata)=>handleDownload(CSVdata)}>Download To CSV</button>
+      <button onClick={handleDownloadToImg}>Download To Image</button>
     </>
   );
 };
