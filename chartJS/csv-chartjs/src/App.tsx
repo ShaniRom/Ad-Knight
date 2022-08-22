@@ -33,7 +33,6 @@ const [userData ,setUserData] = useState({
 ]
 })
 
-
   async function getCsvFile(ev:any){
     
     const newFile = ev.target.files[0]
