@@ -92,7 +92,7 @@ const BarChart = (props: BarChartProps) => {
     async function setLabel(ev:any){
       const label = ev.target.id;
       await setChosenLabel(label)
-      const tempData = userData
+      const tempData = userData;
       tempData.labels= dataSaved.map((data:any) => `${data[chosenlabel]}`)
       setUserData(tempData)
     }
@@ -149,11 +149,42 @@ const BarChart = (props: BarChartProps) => {
   // }
 
   function handleDownload(CSVdata:any){
+  
+    console.log(userData.datasets[0].data);
+    console.log(userData.labels);
+    // console.log(dataSaved);
 
-  let csv = Papa.unparse({
-    data:[CSVdata],
-    fields:[labels]
-  });
+    const dataTemp = userData.labels.map((year:any,i:number) => {
+      return (
+        {mam:userData.datasets[0].data[i],Year:year}
+      )
+    })
+    
+    console.log(dataTemp);
+    
+  
+   
+    let csv = Papa.unparse([
+      dataTemp.map((obj:any,i:number) => {
+        return (
+        {
+          "Year": obj.Year,
+          "MAM" : obj.mam
+        }
+        )
+      })
+    ]);
+      
+      
+
+  //   const data = userData.labels.map(obj => [
+  //     obj
+  //     obj.title,
+  //     obj.description
+  // ])
+
+    
+  
 
   const blob = new Blob([csv]);
 
