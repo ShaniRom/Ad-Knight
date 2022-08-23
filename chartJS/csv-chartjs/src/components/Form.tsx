@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import '../style/style.scss'
 
 interface FormProps{
@@ -7,9 +7,11 @@ interface FormProps{
     userData:any
 }
 
+
 function Form(props:FormProps) {
 
 const {setUserData,dataSaved,userData} = props;
+
 
     async function setyears(ev:any){
         ev.preventDefault()
@@ -21,12 +23,16 @@ const {setUserData,dataSaved,userData} = props;
         const tempChartData = userData;
         tempChartData.labels = tempData.map((data:any) => data["Year"])
         tempChartData.datasets.data = tempData.map((data:any) => data.MAM)
-        console.log(tempChartData)
-        
+        console.log(tempChartData)  
 
+       
+      
         setUserData(tempChartData)
+      
+       
     }
-
+    
+    
   return (
     <form className='formYears' onSubmit={setyears}>
         <label htmlFor="min">from year</label>
