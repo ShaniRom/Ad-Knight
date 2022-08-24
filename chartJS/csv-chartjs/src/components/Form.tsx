@@ -60,9 +60,9 @@ const {setYears,dataSaved,userData,setChoseYears,setfilteredData} = props;
     
   return (
     <form className='formYears' onSubmit={setyears}>
-        <label htmlFor="min">from year</label>
+        <label htmlFor="min">Search from year-</label>
         <input min={1800} max={2022} name='min' type="number" required/> <br />
-        <label htmlFor="max">til year</label>
+        <label htmlFor="max">Till year-</label>
         <input min={1800} max={2022} name='max' type="number" required/><br />
         <input name='submit' type="submit" value="submit"/>
     </form>
