@@ -1,36 +1,59 @@
 import React,{useEffect} from 'react'
-import '../style/style.scss'
+import '../style/style.scss';
+import {getColors} from '../features/colors'
 
 interface FormProps{
-  setUserData:Function;
+  setYears:Function;
     dataSaved:Array<any>
-    userData:any
+    userData:any;
+    setChoseYears:Function;
 }
 
 
 function Form(props:FormProps) {
 
-const {setUserData,dataSaved,userData} = props;
+const {setYears,dataSaved,userData,setChoseYears} = props;
 
 
     async function setyears(ev:any){
         ev.preventDefault()
+    //     labels: CSVdata.map((data: any) => `${data["Year"]}`),
+    // datasets: [
+    //   {
+    //     label: "Global Temperature Time Series,Annual , 1800 - present",
+    //     data: CSVdata.map((data: any) => `${data.MAM}`),
+    //     backgroundColor: backgroundcolor,
+    //   },
+
         const min = ev.target.elements.min.value
         const max = ev.target.elements.max.value
         const tempData = dataSaved.filter((obj:any) => obj.Year >= min && obj.Year <= max)
-
         console.log(tempData);
         
-        const tempChartData = userData;
-        // console.log(tempChartData);
+        let backgroundcolor:any = []
+        console.log(tempData);
         
-        tempChartData.labels = tempData.map((data:any) => data.Year )
-        tempChartData.datasets.data = tempData.map((data:any) => data.MAM)
-        tempChartData.datasets.backgroundColor = tempChartData.datasets[0].backgroundColor  
-       
+        getColors(tempData).then((result) => {
+          const colors = result.backGroundColor          
+          colors.map((color:any) => {
+            backgroundcolor.push(color)
+          })
+           
+           
+         })
         
+        const tempChartData = {
+          labels : tempData.map((obj:any) => obj.Year),
+          datasets: [
+            {
+              label: "lalala",
+              data: tempData.map((data: any) => `${data.MAM}`),
+              backgroundColor: backgroundcolor,
+            }]
+        };
 
-        await setUserData(tempChartData)
+        await setYears(tempChartData)
+        await setChoseYears(true)
     }
     
     

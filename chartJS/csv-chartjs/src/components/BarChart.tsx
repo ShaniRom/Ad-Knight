@@ -41,18 +41,17 @@ interface BarChartProps {
 
 const BarChart = (props: BarChartProps) => {
   let { dataSaved, labels, keysOfObj } = props;
-  // console.log(dataSaved);
   let [CSVdata, setCSVdata] = useState(dataSaved);
   let [backgroundcolor, setBackGroundColor] = useState<any>([]);
   let [chartClicked, setChartClicked] = useState(false);
-  let [years, setYears] = useState([1800, 2022]);
+  let [years, setYears] = useState<any>({});
   let [choseYears, setChoseYears] = useState(false);
   let [chartData, setChartData] = useState<any>();
   let [chosenlabel, setChosenLabel] = useState("");
   const chartRef: any = useRef(null);
 
   const [userData, setUserData] = useState({
-    labels: CSVdata.map((data: any) => `${data["Year"]}`),
+    labels: CSVdata.map((data:any) => `${data["Year"]}`),
     datasets: [
       {
         label: "Global Temperature Time Series,Annual , 1800 - present",
@@ -82,9 +81,9 @@ const BarChart = (props: BarChartProps) => {
   // get chart data for table
 
   const getChart = async (ev: any) => {
+    console.log(ev);
     const chosenChart = getElementAtEvent(chartRef.current, ev);
     const index = chosenChart[0].index;
-    // console.log(index);
     console.log(chosenChart);
     await getChartData(index);
     setChartClicked(true);
@@ -185,18 +184,20 @@ const BarChart = (props: BarChartProps) => {
           style={{ width: 500, height: 350 }}
           ref={chartRef}
           onClick={getChart}
-          data={userData}
+          data={choseYears?years:userData}
           options={{
             maintainAspectRatio: false,
             scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
           }}
         />
+      
       </div>
 
       <Form
         userData={userData}
-        setUserData={setUserData}
+        setYears={setYears}
         dataSaved={dataSaved}
+        setChoseYears={setChoseYears}
       />
       <Table
         chartClicked={chartClicked}

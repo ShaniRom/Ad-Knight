@@ -16,18 +16,9 @@ function Table(props:TableProps) {
     "Jul" , "Aug" ,"Sep" , "Oct" ,"Nov" , "Dec"])
     const [monthsData , setMonthsData] = useState<any>([])
 
-    // if(chartClicked) {
-    //     monthsList.forEach((month:any) =>{
-    //         monthsData.push({month:chartData[`${month}`] })
-    //     })
- 
-    // }
-
     
 
-    
-    
-        
+
 if(chartClicked){
     return (
         <div>
