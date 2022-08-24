@@ -184,7 +184,7 @@ const BarChart = (props: BarChartProps) => {
         <Bar
           style={{ width: 500, height: 350 }}
           ref={chartRef}
-          onClick={(ev)=>{getChart(ev)}}
+          onClick={getChart}
           data={userData}
           options={{
             maintainAspectRatio: false,

@@ -22,12 +22,12 @@ const {setUserData,dataSaved,userData} = props;
         console.log(tempData);
         
         const tempChartData = userData;
-        console.log(tempChartData);
+        // console.log(tempChartData);
         
-        tempChartData.labels = tempData.map((data:any) => data.year )
+        tempChartData.labels = tempData.map((data:any) => data.Year )
         tempChartData.datasets.data = tempData.map((data:any) => data.MAM)
         tempChartData.datasets.backgroundColor = tempChartData.datasets[0].backgroundColor  
-        console.log(tempChartData)
+       
         
 
         await setUserData(tempChartData)
