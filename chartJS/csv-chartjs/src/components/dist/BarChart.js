@@ -44,7 +44,7 @@ var chart_js_1 = require("chart.js");
 require("../style/style.scss");
 var Table_1 = require("./Table");
 var Form_1 = require("./Form");
-// import {colors} from "../features/colors"
+var colors_1 = require("../features/colors");
 chart_js_1.Chart.register.apply(chart_js_1.Chart, chart_js_1.registerables);
 //----- checks if label is date and turns the timestamp into actual date and time
 //   let timestamp = 1607110465663;
@@ -86,24 +86,13 @@ var BarChart = function (props) {
     }), userData = _h[0], setUserData = _h[1];
     // set colors by values
     react_1.useEffect(function () {
-        dataSaved.map(function (obj) {
-            var tempColor;
-            var int = parseFloat(obj.MAM);
-            if (int < 0 && int > -0.5) {
-                tempColor = "rgba(186, 14, 39)";
-            }
-            else if (int < -0.5) {
-                tempColor = "black";
-            }
-            else if (int > 0 && int < 0.5) {
-                tempColor = "rgb(222, 135, 21)";
-            }
-            else if (int > 0.5) {
-                tempColor = "rgba(138, 213, 72, 0.25)";
-            }
-            backgroundcolor.push(tempColor);
+        colors_1.getColors(dataSaved).then(function (result) {
+            var colors = result.backGroundColor;
+            colors.map(function (color) {
+                backgroundcolor.push(color);
+            });
+            setBackGroundColor(colors);
         });
-        // setBackGroundColor(colors(dataSaved))
     }, []);
     function setLabel(ev) {
         return __awaiter(this, void 0, void 0, function () {

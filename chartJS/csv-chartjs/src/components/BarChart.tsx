@@ -9,7 +9,7 @@ import { setDatasets } from "react-chartjs-2/dist/utils";
 import { CSVLink } from "react-csv";
 import Table from "./Table";
 import Form from "./Form";
-// import {colors} from "../features/colors"
+import {getColors} from '../features/colors'
 Chart.register(...registerables);
 
 interface BarChartProps {
@@ -64,24 +64,20 @@ const BarChart = (props: BarChartProps) => {
 
   // set colors by values
 
-  useEffect(() => {
-    dataSaved.map((obj: any) => {
-      let tempColor;
-      let int = parseFloat(obj.MAM);
-      if (int < 0 && int > -0.5) {
-        tempColor = "rgba(186, 14, 39)";
-      } else if (int < -0.5) {
-        tempColor = "black";
-      } else if (int > 0 && int < 0.5) {
-        tempColor = "rgb(222, 135, 21)";
-      } else if (int > 0.5) {
-        tempColor = "rgba(138, 213, 72, 0.25)";
-      }
-      backgroundcolor.push(tempColor);
-    });
+    useEffect(() => {
+      
+       getColors(dataSaved).then((result) => {
+         const colors = result.backGroundColor;
+         
+         colors.map((color:any) => {
+          backgroundcolor.push(color) 
+         })
+          
+          setBackGroundColor(colors)
+        })
+       },[])
 
-    // setBackGroundColor(colors(dataSaved))
-  }, [userData]);
+       
 
   // get chart data for table
 

@@ -18,27 +18,28 @@ const {setUserData,dataSaved,userData} = props;
         const min = ev.target.elements.min.value
         const max = ev.target.elements.max.value
         const tempData = dataSaved.filter((obj:any) => obj.Year >= min && obj.Year <= max)
+
         console.log(tempData);
         
         const tempChartData = userData;
-        tempChartData.labels = tempData.map((data:any) => data["Year"])
+        console.log(tempChartData);
+        
+        tempChartData.labels = tempData.map((data:any) => data.year )
         tempChartData.datasets.data = tempData.map((data:any) => data.MAM)
-        console.log(tempChartData)  
+        tempChartData.datasets.backgroundColor = tempChartData.datasets[0].backgroundColor  
+        console.log(tempChartData)
+        
 
-       
-      
-        setUserData(tempChartData)
-      
-       
+        await setUserData(tempChartData)
     }
     
     
   return (
     <form className='formYears' onSubmit={setyears}>
         <label htmlFor="min">from year</label>
-        <input min={1800} max={2022} name='min' type="number" /> <br />
+        <input min={1800} max={2022} name='min' type="number" required/> <br />
         <label htmlFor="max">til year</label>
-        <input min={1800} max={2022} name='max' type="number" /><br />
+        <input min={1800} max={2022} name='max' type="number" required/><br />
         <input name='submit' type="submit" value="submit"/>
     </form>
   )
