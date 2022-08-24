@@ -7,12 +7,13 @@ interface FormProps{
     dataSaved:Array<any>
     userData:any;
     setChoseYears:Function;
+    setfilteredData:Function
 }
 
 
 function Form(props:FormProps) {
 
-const {setYears,dataSaved,userData,setChoseYears} = props;
+const {setYears,dataSaved,userData,setChoseYears,setfilteredData} = props;
 
 
     async function setyears(ev:any){
@@ -28,11 +29,11 @@ const {setYears,dataSaved,userData,setChoseYears} = props;
         const min = ev.target.elements.min.value
         const max = ev.target.elements.max.value
         const tempData = dataSaved.filter((obj:any) => obj.Year >= min && obj.Year <= max)
-        console.log(tempData);
+       
         
         let backgroundcolor:any = []
         console.log(tempData);
-        
+        setfilteredData(tempData)
         getColors(tempData).then((result) => {
           const colors = result.backGroundColor          
           colors.map((color:any) => {
@@ -51,7 +52,7 @@ const {setYears,dataSaved,userData,setChoseYears} = props;
               backgroundColor: backgroundcolor,
             }]
         };
-
+            
         await setYears(tempChartData)
         await setChoseYears(true)
     }

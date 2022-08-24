@@ -48,6 +48,8 @@ const BarChart = (props: BarChartProps) => {
   let [choseYears, setChoseYears] = useState(false);
   let [chartData, setChartData] = useState<any>();
   let [chosenlabel, setChosenLabel] = useState("");
+  let [filteredData, setfilteredData] =useState<any>([]);
+
   const chartRef: any = useRef(null);
 
   const [userData, setUserData] = useState({
@@ -81,7 +83,7 @@ const BarChart = (props: BarChartProps) => {
   // get chart data for table
 
   const getChart = async (ev: any) => {
-    console.log(ev);
+    // console.log(ev);
     const chosenChart = getElementAtEvent(chartRef.current, ev);
     const index = chosenChart[0].index;
     console.log(chosenChart);
@@ -92,7 +94,13 @@ const BarChart = (props: BarChartProps) => {
   
 
   async function getChartData(index: any) {
-    const chartData = CSVdata[index];
+    let chartData;
+    if(choseYears){
+      
+     chartData=filteredData[index]
+    }else{
+       chartData = CSVdata[index];
+    }
     setChartData(chartData);
     console.log(chartData);
   }
@@ -198,6 +206,7 @@ const BarChart = (props: BarChartProps) => {
         setYears={setYears}
         dataSaved={dataSaved}
         setChoseYears={setChoseYears}
+        setfilteredData={setfilteredData}
       />
       <Table
         chartClicked={chartClicked}
