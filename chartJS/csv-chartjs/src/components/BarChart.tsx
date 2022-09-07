@@ -18,26 +18,7 @@ interface BarChartProps {
   keysOfObj: Array<any>;
 }
 
-//----- checks if label is date and turns the timestamp into actual date and time
 
-//   let timestamp = 1607110465663;
-//   let date = new Date(timestamp);
-
-//   console.log(
-//     "Date: " +
-//       date.getDate() +
-//       "/" +
-//       (date.getMonth() + 1) +
-//       "/" +
-//       date.getFullYear() +
-//       " " +
-//       date.getHours() +
-//       ":" +
-//       date.getMinutes() +
-//       ":" +
-//       date.getSeconds()
-//   );
-// console.log(date)
 
 const BarChart = (props: BarChartProps) => {
   let { dataSaved, labels, keysOfObj } = props;
@@ -49,7 +30,7 @@ const BarChart = (props: BarChartProps) => {
   let [chartData, setChartData] = useState<any>();
   let [chosenlabel, setChosenLabel] = useState("");
   let [filteredData, setfilteredData] =useState<any>([]);
-
+console.log(dataSaved)
   const chartRef: any = useRef(null);
   dataSaved.length = 15;
   console.log(dataSaved);
@@ -107,50 +88,12 @@ const BarChart = (props: BarChartProps) => {
     console.log(chartData);
   }
 
-  // ==============================================================
-  //set label normal and with translating time stamp
 
-  // async function setLabel(ev:any){
-  //   const label = ev.target.id;
-  //   await setChosenLabel(label)
-  //   const tempData = userData;
-  //   tempData.labels= dataSaved.map((data:any) => `${data[label]}`)
-  //   setUserData(tempData)
-  // }
-
-  // function settLabel(ev: any) {
-  //   const label = ev.target.id;
-  //   setChosenLabel(label);
-  //   console.log(label);
-  //   const tempData = userData;
-  // if (chosenlabel ===' "Date"') {
-  //   // const timeStamp = tempData.labels.chosenlabel;
-  //  let date = new Date(chosenlabel);
-  //   console.log(
-  //     "Date: " +
-  //       date.getDate() +
-  //       "/" +
-  //       (date.getMonth() + 1) +
-  //       "/" +
-  //       date.getFullYear() +
-  //       " " +
-  //       date.getHours() +
-  //       ":" +
-  //       date.getMinutes() +
-  //       ":" +
-  //       date.getSeconds()
-  //   );
-  //   tempData.labels = dataSaved.map((data: any) => `${data[`${label}`]}`);
-  // }else{
-  //   tempData.labels = dataSaved.map((data: any) => `${data[`${label}`]}`);
-
-  //   setUserData(tempData);
-  // }
 
   function handleDownload(CSVdata: any) {
     console.log(userData.datasets[0].data);
     console.log(userData.labels);
-    // console.log(dataSaved);
+   
 
     const dataTemp = userData.labels.map((year: any, i: number) => {
       return { mam: userData.datasets[0].data[i], Year: year };
