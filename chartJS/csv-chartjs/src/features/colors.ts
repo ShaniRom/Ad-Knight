@@ -1,4 +1,5 @@
   export const getColors =  async (data:any) => {
+    
     let backGroundColor:any = []
     await data.map((obj:any) => {
         let tempColor;
