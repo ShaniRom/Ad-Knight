@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./App.css";
 import { Doughnut } from "react-chartjs-2";
 import BarChart from "./components/BarChart";
-import { UserData } from "./app/data";
 import { Chart, registerables } from "chart.js";
 import Papa from "papaparse";
 import { ListFormat } from "typescript";
@@ -18,31 +17,8 @@ function App() {
   const [dataSaved, setDataSaved] = useState<any>([]);
   const [labels, setLabels] = useState<any>();
  
-  const [userData, setUserData] = useState({
-    labels: UserData.map((data) => data.year),
-    datasets: [
-      {
-        label: "Users Gained",
-        data: UserData.map((data) => data.profits),
-        backgroundColor: ["red", "black", "green", "pink"],
-      },
-    ]
-    // ,plugins:{
-    //   id: 'custom_canvas_background_color',
-    //   beforeDraw: (chart:any, args:any, options:any) => {
-    //       const {ctx} = chart;
-    //       ctx.save();
-    //       ctx.globalCompositeOperation = 'destination-over';
-    //       ctx.fillStyle = options.color;
-    //       ctx.fillRect(0, 0, chart.width, chart.height);
-    //       ctx.restore();
-    //   },
-    //   defaults: {
-    //       color: 'lightGreen'
-    //   }
-    // }
-  }
-  );
+ 
+
 
   async function getCsvFile(ev: any) {
     const newFile = ev.target.files[0];
@@ -69,6 +45,7 @@ function App() {
         }
 
         setDataSaved(newData);
+        
         setFileAdded(true);
       },
     });

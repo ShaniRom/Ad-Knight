@@ -18,13 +18,7 @@ const {setYears,dataSaved,userData,setChoseYears,setfilteredData} = props;
 
     async function setyears(ev:any){
         ev.preventDefault()
-    //     labels: CSVdata.map((data: any) => `${data["Year"]}`),
-    // datasets: [
-    //   {
-    //     label: "Global Temperature Time Series,Annual , 1800 - present",
-    //     data: CSVdata.map((data: any) => `${data.MAM}`),
-    //     backgroundColor: backgroundcolor,
-    //   },
+
 
         const min = ev.target.elements.min.value
         const max = ev.target.elements.max.value
@@ -72,7 +66,7 @@ const {setYears,dataSaved,userData,setChoseYears,setfilteredData} = props;
         <input name='submit' type="submit" value="submit"/>
     </form>
   )
-  // 0.07	0.15	0.11	0.19	0.11	0.12	0.01	0.05	0.04	0.08	-0.03	0.05
+ 
 }
 
 export default Form
