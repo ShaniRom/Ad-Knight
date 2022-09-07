@@ -14,15 +14,23 @@ Chart.register(...registerables);
 
 interface BarChartProps {
   dataSaved: any;
-  labels: any;
+  keysBLE:Array<any>
   keysOfObj: Array<any>;
+  keysWIFI: Array<any>;
 }
 
 
 
 const BarChart = (props: BarChartProps) => {
-  let { dataSaved, labels, keysOfObj } = props;
+
+  let { dataSaved, keysOfObj,keysBLE ,keysWIFI} = props;
+
+dataSaved.length = 50;
+console.log(dataSaved);
+
   let [CSVdata, setCSVdata] = useState(dataSaved);
+  let [dataWifi, setDataWifi] = useState<any>([]);
+  let [dataBLE , setDataBLE] = useState<any>([]); 
   let [backgroundcolor, setBackGroundColor] = useState<any>([]);
   let [chartClicked, setChartClicked] = useState(false);
   let [years, setYears] = useState<any>({});
@@ -30,11 +38,8 @@ const BarChart = (props: BarChartProps) => {
   let [chartData, setChartData] = useState<any>();
   let [chosenlabel, setChosenLabel] = useState("");
   let [filteredData, setfilteredData] =useState<any>([]);
-console.log(dataSaved)
   const chartRef: any = useRef(null);
-  dataSaved.length = 15;
-  console.log(dataSaved);
-  
+
   const [userData, setUserData] = useState({
     labels: CSVdata.map((data:any) => `${data["Year"]}`),
     datasets: [
@@ -45,6 +50,32 @@ console.log(dataSaved)
       },
     ],
   });
+
+  function filterData(){
+
+    const filteredBLE = dataSaved.filter((obj:any) => {
+      return obj.BLE === "BLE";
+    })
+
+    
+    console.log(filteredBLE);
+    console.log(filteredBLE.length);
+
+    
+    // for(let i = 0; i < keysBLE.length;i++ ){
+
+    //   const tempObj = {keysBLE[i]:filteredBLE.map()}
+      
+    // }
+    setDataBLE(filteredBLE)
+
+    const filteredWIFI = dataSaved.filter((obj:any) => {
+      return obj.BLE === "WIFI"
+    })
+    
+    console.log(filteredWIFI);
+    setDataWifi(filteredWIFI)
+    }
 
   // set colors by values
 
@@ -59,6 +90,7 @@ console.log(dataSaved)
           
           setBackGroundColor(colors)
         })
+         filterData()
        },[])
 
        
@@ -85,7 +117,7 @@ console.log(dataSaved)
        chartData = CSVdata[index];
     }
     setChartData(chartData);
-    console.log(chartData);
+    // console.log(chartData);
   }
 
 
