@@ -51,7 +51,9 @@ const BarChart = (props: BarChartProps) => {
   let [filteredData, setfilteredData] =useState<any>([]);
 
   const chartRef: any = useRef(null);
-
+  dataSaved.length = 15;
+  console.log(dataSaved);
+  
   const [userData, setUserData] = useState({
     labels: CSVdata.map((data:any) => `${data["Year"]}`),
     datasets: [
