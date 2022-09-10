@@ -52,7 +52,6 @@ const {setYears,dataSaved,userData,setChoseYears,setfilteredData} = props;
         // if(ev.target.input.value !== "submit"){
         //   ev.target.input.value = ""
         // }
-        console.dir(ev.target.input.value)
          
     }
     

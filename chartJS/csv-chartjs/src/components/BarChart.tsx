@@ -2,15 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import { useCSVDownloader } from "react-papaparse";
 import Papa from "papaparse";
 // import CSVDownloader from "./CSVDownloader";
+import createChartData from "../features/chartData";
 import { Bar, getElementAtEvent, Doughnut } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import "../style/style.scss";
 import { setDatasets } from "react-chartjs-2/dist/utils";
 import { CSVLink } from "react-csv";
+import {filterData} from '../features/filter'
 import Table from "./Table";
 import Form from "./Form";
 import {getColors} from '../features/colors'
 Chart.register(...registerables);
+
 
 interface BarChartProps {
   dataSaved: any;
@@ -25,10 +28,12 @@ const BarChart = (props: BarChartProps) => {
 
   let { dataSaved, keysOfObj,keysBLE ,keysWIFI} = props;
 
-dataSaved.length = 50;
-console.log(dataSaved);
+dataSaved.length = 25;
+
 
   let [CSVdata, setCSVdata] = useState(dataSaved);
+  let [dataSetData,setdataSetsData] = useState("MAM")
+  let [Label, setChosenLabel] = useState("year");
   let [dataWifi, setDataWifi] = useState<any>([]);
   let [dataBLE , setDataBLE] = useState<any>([]); 
   let [backgroundcolor, setBackGroundColor] = useState<any>([]);
@@ -36,46 +41,13 @@ console.log(dataSaved);
   let [years, setYears] = useState<any>({});
   let [choseYears, setChoseYears] = useState(false);
   let [chartData, setChartData] = useState<any>();
-  let [chosenlabel, setChosenLabel] = useState("");
   let [filteredData, setfilteredData] =useState<any>([]);
   const chartRef: any = useRef(null);
 
-  const [userData, setUserData] = useState({
-    labels: CSVdata.map((data:any) => `${data["Year"]}`),
-    datasets: [
-      {
-        label: "Global Temperature Time Series,Annual , 1800 - present",
-        data: CSVdata.map((data: any) => `${data.MAM}`),
-        backgroundColor: backgroundcolor,
-      },
-    ],
-  });
+  const [userData, setUserData] = useState(createChartData(CSVdata,backgroundcolor,Label,dataSetData));
 
-  function filterData(){
-
-    const filteredBLE = dataSaved.filter((obj:any) => {
-      return obj.BLE === "BLE";
-    })
-
-    
-    console.log(filteredBLE);
-    console.log(filteredBLE.length);
-
-    
-    // for(let i = 0; i < keysBLE.length;i++ ){
-
-    //   const tempObj = {keysBLE[i]:filteredBLE.map()}
-      
-    // }
-    setDataBLE(filteredBLE)
-
-    const filteredWIFI = dataSaved.filter((obj:any) => {
-      return obj.BLE === "WIFI"
-    })
-    
-    console.log(filteredWIFI);
-    setDataWifi(filteredWIFI)
-    }
+  console.log(createChartData(CSVdata,backgroundcolor,Label,dataSetData));
+  
 
   // set colors by values
 
@@ -83,14 +55,13 @@ console.log(dataSaved);
       
        getColors(dataSaved).then((result) => {
          const colors = result.backGroundColor;
-         
          colors.map((color:any) => {
           backgroundcolor.push(color) 
          })
           
           setBackGroundColor(colors)
         })
-         filterData()
+        filterData(dataSaved,keysBLE,keysWIFI)
        },[])
 
        
