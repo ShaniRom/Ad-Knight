@@ -2,13 +2,21 @@
 
 export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
 
-    const filteredBLE = dataSaved.filter((obj:any) => {
-        console.log(obj);
+    const filteredBLE = dataSaved.filter((objBLE:any) => {
         
-      return obj["BLE"] === "BLE";
+        if (objBLE["BLE"] === "BLE"){
+          console.log(objBLE);
+        }
+      return objBLE["BLE"] === "BLE";
+      
     })
-    const filteredWIFI = dataSaved.filter((obj:any) => {
-      return obj["BLE"] === "WIFI"
+    
+    const filteredWIFI = dataSaved.filter((objWIFI:any) => {
+
+      if(objWIFI["BLE"] === "WIFI"){
+        console.log(objWIFI);
+      }
+      return objWIFI["BLE"] === "WIFI"
     })
 
     await filterWithKeys(filteredBLE,filteredWIFI,keysBLE,keysWIFI)
