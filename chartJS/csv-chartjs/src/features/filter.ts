@@ -19,11 +19,16 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
       return objWIFI["BLE"] === "WIFI"
     })
 
-    await filterWithKeys(filteredBLE,filteredWIFI,keysBLE,keysWIFI)
+    const data = await filterWithKeys(filteredBLE,filteredWIFI,keysBLE,keysWIFI)
+    const BLEdata = data.BLEData
+    const wifidata = data.wifiData
+    console.log(BLEdata,wifidata);
+    
+    
     
     }
 
-    function filterWithKeys(filteredBLE:any,filteredWIFI:any,keysBLE:any,keysWIFI:any){
+  function filterWithKeys(filteredBLE:any,filteredWIFI:any,keysBLE:any,keysWIFI:any){
         
         // keysBLE ,keysWIFI
         let wifiData:any = [];
@@ -49,9 +54,10 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
                 });
                 wifiData = [...wifiData,obj]              
               })
+              console.log(wifiData);
+              console.log(BLEData);
               return {BLEData , wifiData}
-            console.log(wifiData);
-            console.log(BLEData);
+            
 
         }
          

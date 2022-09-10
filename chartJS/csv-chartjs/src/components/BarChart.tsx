@@ -28,8 +28,10 @@ const BarChart = (props: BarChartProps) => {
 
   let { dataSaved, keysOfObj,keysBLE ,keysWIFI} = props;
 
+  
+  
 dataSaved.length = 25;
-
+console.log(dataSaved);
 
   let [CSVdata, setCSVdata] = useState(dataSaved);
   let [dataSetData,setdataSetsData] = useState("MAM")
