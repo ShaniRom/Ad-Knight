@@ -29,6 +29,7 @@ const BarChart = (props: BarChartProps) => {
   let { dataSaved, keysOfObj,keysBLE ,keysWIFI} = props;
 
   
+  console.log(keysOfObj);
   
 dataSaved.length = 25;
 console.log(dataSaved);

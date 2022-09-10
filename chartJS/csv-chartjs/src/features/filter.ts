@@ -5,7 +5,7 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
     const filteredBLE = dataSaved.filter((objBLE:any) => {
         
         if (objBLE["BLE"] === "BLE"){
-          console.log(objBLE);
+          // console.log(objBLE);
         }
       return objBLE["BLE"] === "BLE";
       
@@ -14,7 +14,7 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
     const filteredWIFI = dataSaved.filter((objWIFI:any) => {
 
       if(objWIFI["BLE"] === "WIFI"){
-        console.log(objWIFI);
+        // console.log(objWIFI);
       }
       return objWIFI["BLE"] === "WIFI"
     })
@@ -24,8 +24,7 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
     const wifidata = data.wifiData
     console.log(BLEdata,wifidata);
     
-    
-    
+  
     }
 
   function filterWithKeys(filteredBLE:any,filteredWIFI:any,keysBLE:any,keysWIFI:any){
@@ -54,8 +53,12 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
                 });
                 wifiData = [...wifiData,obj]              
               })
-              console.log(wifiData);
-              console.log(BLEData);
+              
+              const reseredBLE = BLEData.map((obj:any) => obj).reverse()
+              wifiData.reverse()
+              console.log(reseredBLE);
+              // console.log(wifiData);
+
               return {BLEData , wifiData}
             
 
