@@ -2,6 +2,7 @@
 
 export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
 
+
     const filteredBLE = dataSaved.filter((objBLE:any) => {
         
         if (objBLE["BLE"] === "BLE"){
@@ -19,10 +20,12 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
       return objWIFI["BLE"] === "WIFI"
     })
 
-    const data = await filterWithKeys(filteredBLE,filteredWIFI,keysBLE,keysWIFI)
-    const BLEdata = data.BLEData
-    const wifidata = data.wifiData
-    console.log(BLEdata,wifidata);
+    console.log(filteredWIFI);
+    
+    // const data = await filterWithKeys(filteredBLE,filteredWIFI,keysBLE,keysWIFI)
+    // const BLEdata = data.BLEData
+    // const wifidata = data.wifiData
+    // console.log(BLEdata,wifidata);
     
   
     }
@@ -32,17 +35,28 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
         // keysBLE ,keysWIFI
         let wifiData:any = [];
         let BLEData:any = [];
-
+        
+        console.log(filteredBLE);
+        
+        console.log(keysBLE);
+        console.log(keysWIFI);
+        
 // get the BLE of BLE with all BLE fields values -------------------------
 
         filteredBLE.map((obj:any,i:number) => {
 
+            console.log(Object.keys(obj));
+            
               Object.keys(obj).map((key,i) =>  {
+
+                console.log(obj);
+                
                  obj[`${keysBLE[i]}`] = obj[`${key}`]
                  delete obj[`${key}`]
               });
                 BLEData = [...BLEData,obj]
             })
+
      // get the keys of wifi with all wifi fields values -------------------------
 
             filteredWIFI.map((obj:any,i:number) => {
@@ -53,11 +67,7 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
                 });
                 wifiData = [...wifiData,obj]              
               })
-              
-              const reseredBLE = BLEData.map((obj:any) => obj).reverse()
-              wifiData.reverse()
-              console.log(reseredBLE);
-              // console.log(wifiData);
+            
 
               return {BLEData , wifiData}
             

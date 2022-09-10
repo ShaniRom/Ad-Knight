@@ -20,18 +20,33 @@ function App() {
   const [keysBLE , setKeysBLE ] = useState<any>([])
 
   
+//   grossaryList = {
+//     'bread': 1,
+//     'apple': 6,
+//     'milk': 1,
+//     'orange': 3,
+//     'broccoli': 2
+//    }
+// return Object.entries(grossaryList).sort((a,b) => b[1]-a[1])
+// //=> 
+// [['apple', 6],['orange', 3],['broccoli', 2],['bread',1],['milk', 1]]
+
 
   function handleFilter(){
     const tempWifi:any = []
     const tempBLE:any = []
     const wifi = event_mapping["WIFI"]["0.8.5"]
     const ble = event_mapping.BLE["0.8.5"]
-    Object.keys(wifi).map((obj) => {
-      tempWifi.push(obj);
+    const sortedWIFI = Object.entries(wifi).sort((a,b) => a[1]-b[1])
+    const sortedBLE = Object.entries(ble).sort((a,b) => a[1]-b[1])
+
+    sortedWIFI.map((obj) => {
+      tempWifi.push(obj[0]);
     });
-    Object.keys(ble).map((obj) => {
-      tempBLE.push(obj);
+    sortedBLE.map((obj) => {
+      tempBLE.push(obj[0]);
     });
+
     setKeysWIFI(tempWifi)
     setKeysBLE(tempBLE)
   }
@@ -39,13 +54,17 @@ function App() {
   
  
   async function getCsvFile(ev: any) {
-    const newFile = ev.target.files[0];
 
+    const newFile = ev.target.files[0];
+    console.log();
+    
+        
     Papa.parse(newFile, {
-      header: true,
+      header: false,
       skipEmptyLines: true,
       complete: async function (results) {
         const list: any = results.data;
+        
         let newData = [];
 
         for (let i = 0; i < list.length; i++) {
@@ -55,9 +74,11 @@ function App() {
               setKeysOfObj(keysOfObj);
             });
           }
-
+          
+          
           newData.push(list[i]);
         }
+        
         
          
         await handleFilter()  

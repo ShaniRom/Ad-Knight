@@ -29,9 +29,11 @@ const BarChart = (props: BarChartProps) => {
   let { dataSaved, keysOfObj,keysBLE ,keysWIFI} = props;
 
   
-  console.log(keysOfObj);
+  // console.log(keysOfObj);
   
 dataSaved.length = 25;
+console.log(keysBLE);
+
 console.log(dataSaved);
 
   let [CSVdata, setCSVdata] = useState(dataSaved);
