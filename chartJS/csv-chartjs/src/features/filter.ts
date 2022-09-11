@@ -1,33 +1,25 @@
 
+import getDate from "./getDate";
+
 
 export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
 
-
+    console.log(dataSaved);
+    
     const filteredBLE = dataSaved.filter((objBLE:any) => {
         
-        if (objBLE["BLE"] === "BLE"){
-          // console.log(objBLE);
-        }
-      return objBLE["BLE"] === "BLE";
+      return objBLE[0] === "BLE";
       
     })
     
     const filteredWIFI = dataSaved.filter((objWIFI:any) => {
 
-      if(objWIFI["BLE"] === "WIFI"){
-        // console.log(objWIFI);
-      }
-      return objWIFI["BLE"] === "WIFI"
+      return objWIFI[0] === "WIFI"
     })
-
-    console.log(filteredWIFI);
     
-    // const data = await filterWithKeys(filteredBLE,filteredWIFI,keysBLE,keysWIFI)
-    // const BLEdata = data.BLEData
-    // const wifidata = data.wifiData
-    // console.log(BLEdata,wifidata);
-    
-  
+     const result = await filterWithKeys(filteredBLE,filteredWIFI,keysBLE,keysWIFI)
+        return result;
+        
     }
 
   function filterWithKeys(filteredBLE:any,filteredWIFI:any,keysBLE:any,keysWIFI:any){
@@ -35,44 +27,46 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
         // keysBLE ,keysWIFI
         let wifiData:any = [];
         let BLEData:any = [];
-        
-        console.log(filteredBLE);
-        
-        console.log(keysBLE);
-        console.log(keysWIFI);
-        
-// get the BLE of BLE with all BLE fields values -------------------------
 
-        filteredBLE.map((obj:any,i:number) => {
+      // getting the keys and values together in BLE ----------------------------------------
 
-            console.log(Object.keys(obj));
+      for(let i = 0;i < filteredBLE.length; i++){
+        let tempObj:any = {};
+        for(let x = 0;x < filteredBLE[i].length;x++){
+          const tempKey = keysBLE[x]
+          const tempValue = filteredBLE[i][x]
+          tempObj[`${tempKey}`] =  tempValue;
             
-              Object.keys(obj).map((key,i) =>  {
-
-                console.log(obj);
-                
-                 obj[`${keysBLE[i]}`] = obj[`${key}`]
-                 delete obj[`${key}`]
-              });
-                BLEData = [...BLEData,obj]
-            })
-
-     // get the keys of wifi with all wifi fields values -------------------------
-
-            filteredWIFI.map((obj:any,i:number) => {
-
-                Object.keys(obj).map((key,i) =>  {
-                   obj[`${keysBLE[i]}`] = obj[`${key}`]
-                   delete obj[`${key}`]
-                });
-                wifiData = [...wifiData,obj]              
-              })
-            
-
-              return {BLEData , wifiData}
-            
-
         }
+          tempObj.ts = parseFloat(tempObj.ts)
+          const dateFound = getDate(tempObj.ts)
+          tempObj.ts = dateFound
+          BLEData = [...BLEData,tempObj]      
+        }
+
+  // getting the keys and values together in WIFI ------------------------------ 
+
+        for(let i = 0;i < filteredWIFI.length; i++){
+          let tempObj:any = {};
+          for(let x = 0;x < filteredWIFI[i].length;x++){
+            const tempKey = keysWIFI[x]
+            const tempValue = filteredWIFI[i][x]
+            tempObj[`${tempKey}`] =  tempValue;
+            
+          }
+
+          tempObj.ts = parseFloat(tempObj.ts)
+          const dateFound = getDate(tempObj.ts)
+          tempObj.ts = dateFound
+          wifiData = [...wifiData,tempObj]
+          
+          
+          }
+          return {wifiData,BLEData}
+      }
+      
+    
+        
          
         
     

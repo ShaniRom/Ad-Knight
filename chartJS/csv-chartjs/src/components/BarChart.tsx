@@ -31,10 +31,11 @@ const BarChart = (props: BarChartProps) => {
   
   // console.log(keysOfObj);
   
-dataSaved.length = 25;
+dataSaved.length = 300;
 console.log(keysBLE);
+console.log(keysWIFI);
 
-console.log(dataSaved);
+// console.log(dataSaved);
 
   let [CSVdata, setCSVdata] = useState(dataSaved);
   let [dataSetData,setdataSetsData] = useState("MAM")
@@ -50,8 +51,6 @@ console.log(dataSaved);
   const chartRef: any = useRef(null);
 
   const [userData, setUserData] = useState(createChartData(CSVdata,backgroundcolor,Label,dataSetData));
-
-  console.log(createChartData(CSVdata,backgroundcolor,Label,dataSetData));
   
 
   // set colors by values
@@ -66,7 +65,11 @@ console.log(dataSaved);
           
           setBackGroundColor(colors)
         })
-        filterData(dataSaved,keysBLE,keysWIFI)
+        const result = await filterData(dataSaved,keysBLE,keysWIFI)
+        console.log(result);
+        
+        
+      
        },[])
 
        
