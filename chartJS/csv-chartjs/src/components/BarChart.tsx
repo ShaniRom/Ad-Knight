@@ -54,23 +54,26 @@ console.log(keysWIFI);
   
 
   // set colors by values
-
-    useEffect(() => {
-      
-       getColors(dataSaved).then((result) => {
-         const colors = result.backGroundColor;
-         colors.map((color:any) => {
-          backgroundcolor.push(color) 
-         })
-          
-          setBackGroundColor(colors)
+  useEffect(() => {
+    (async () => {
+      getColors(dataSaved).then((result) => {
+        const colors = result.backGroundColor;
+        colors.map((color:any) => {
+         backgroundcolor.push(color) 
         })
-        const result = await filterData(dataSaved,keysBLE,keysWIFI)
-        console.log(result);
-        
-        
-      
-       },[])
+         
+         setBackGroundColor(colors)
+       })
+       const result = await filterData(dataSaved,keysBLE,keysWIFI)
+       console.log(result);
+       
+    })();
+  
+    // return () => {
+    //   // this now gets called when the component unmounts
+    // };
+  }, []);
+
 
        
 
