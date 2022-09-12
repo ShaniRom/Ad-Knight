@@ -22,7 +22,7 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
         
     }
 
-  function filterWithKeys(filteredBLE:any,filteredWIFI:any,keysBLE:any,keysWIFI:any){
+  async function filterWithKeys(filteredBLE:any,filteredWIFI:any,keysBLE:any,keysWIFI:any){
         
         // keysBLE ,keysWIFI
         let wifiData:any = [];
@@ -40,7 +40,7 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
         }
           tempObj.ts = parseFloat(tempObj.ts)
           const dateFound = getDate(tempObj.ts)
-          tempObj.ts = dateFound
+          tempObj.date = dateFound
           BLEData = [...BLEData,tempObj]      
         }
 
@@ -57,7 +57,7 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
 
           tempObj.ts = parseFloat(tempObj.ts)
           const dateFound = getDate(tempObj.ts)
-          tempObj.ts = dateFound
+          tempObj.date = dateFound
           wifiData = [...wifiData,tempObj]
           
           

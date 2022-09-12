@@ -31,7 +31,7 @@ const BarChart = (props: BarChartProps) => {
   
   // console.log(keysOfObj);
   
-dataSaved.length = 300;
+dataSaved.length = 1000;
 console.log(keysBLE);
 console.log(keysWIFI);
 
@@ -69,9 +69,7 @@ console.log(keysWIFI);
        
     })();
   
-    // return () => {
-    //   // this now gets called when the component unmounts
-    // };
+    
   }, []);
 
 
