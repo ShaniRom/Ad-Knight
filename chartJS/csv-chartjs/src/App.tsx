@@ -7,7 +7,6 @@ import { Chart, registerables } from "chart.js";
 import Papa from "papaparse";
 import { ListFormat } from "typescript";
 import { FileHandle } from "fs/promises";
-import { CSVLink } from "react-csv";
 const allowedExtensions = ["csv"];
 
 function App() {

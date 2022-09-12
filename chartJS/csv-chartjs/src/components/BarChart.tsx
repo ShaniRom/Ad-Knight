@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useCSVDownloader } from "react-papaparse";
 import Papa from "papaparse";
 // import CSVDownloader from "./CSVDownloader";
 import createChartData from "../features/chartData";
@@ -7,7 +6,6 @@ import { Bar, getElementAtEvent, Doughnut } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import "../style/style.scss";
 import { setDatasets } from "react-chartjs-2/dist/utils";
-import { CSVLink } from "react-csv";
 import {filterData} from '../features/filter'
 import Table from "./Table";
 import Form from "./Form";
@@ -31,7 +29,7 @@ const BarChart = (props: BarChartProps) => {
   
   // console.log(keysOfObj);
   
-dataSaved.length = 1000;
+dataSaved.length = 200;
 console.log(keysBLE);
 console.log(keysWIFI);
 
