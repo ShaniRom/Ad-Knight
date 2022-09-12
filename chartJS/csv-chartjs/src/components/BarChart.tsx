@@ -18,26 +18,26 @@ interface BarChartProps {
   keysBLE:Array<any>
   keysOfObj: Array<any>;
   keysWIFI: Array<any>;
+  chartdata:Object;
 }
 
 
 
 const BarChart = (props: BarChartProps) => {
 
-  let { dataSaved, keysOfObj,keysBLE ,keysWIFI} = props;
+  let { dataSaved, keysOfObj,keysBLE ,keysWIFI,chartdata} = props;
 
   
   // console.log(keysOfObj);
   
-dataSaved.length = 200;
-console.log(keysBLE);
-console.log(keysWIFI);
+dataSaved.length = 50;
+
 
 // console.log(dataSaved);
 
   let [CSVdata, setCSVdata] = useState(dataSaved);
-  let [dataSetData,setdataSetsData] = useState("MAM")
-  let [Label, setChosenLabel] = useState("year");
+  let [dataSetData,setdataSetsData] = useState("rssi_0")
+  let [Label, setChosenLabel] = useState();
   let [dataWifi, setDataWifi] = useState<any>([]);
   let [dataBLE , setDataBLE] = useState<any>([]); 
   let [backgroundcolor, setBackGroundColor] = useState<any>([]);
@@ -48,7 +48,10 @@ console.log(keysWIFI);
   let [filteredData, setfilteredData] =useState<any>([]);
   const chartRef: any = useRef(null);
 
-  const [userData, setUserData] = useState(createChartData(CSVdata,backgroundcolor,Label,dataSetData));
+  
+  
+  
+  const [userData, setUserData] = useState<any>(chartdata);
   
 
   // set colors by values
@@ -62,8 +65,14 @@ console.log(keysWIFI);
          
          setBackGroundColor(colors)
        })
-       const result = await filterData(dataSaved,keysBLE,keysWIFI)
-       console.log(result);
+       
+        
+      //  setUserData
+      //  console.log(result);
+      //  const rssi = result.BLEData.rssi_0 * -1;
+      //  const sec:any = "seconds"
+      //  const newData = await createChartData(result.BLEData,sec,rssi)
+      //  setUserData(newData);
        
     })();
   
@@ -87,9 +96,9 @@ console.log(keysWIFI);
   
 
   async function getChartData(index: any) {
+    
     let chartData;
     if(choseYears){
-      
      chartData=filteredData[index]
     }else{
        chartData = CSVdata[index];
@@ -155,14 +164,14 @@ console.log(keysWIFI);
         />
       
       </div>
-
-      <Form
+      
+      {/* <Form
         userData={userData}
         setYears={setYears}
         dataSaved={dataSaved}
         setChoseYears={setChoseYears}
         setfilteredData={setfilteredData}
-      />
+      /> */}
       <Table
         chartClicked={chartClicked}
         chartData={chartData}

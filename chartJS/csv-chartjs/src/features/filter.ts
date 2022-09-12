@@ -16,8 +16,10 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
 
       return objWIFI[0] === "WIFI"
     })
-    
+       console.log(filteredWIFI);
+      
      const result = await filterWithKeys(filteredBLE,filteredWIFI,keysBLE,keysWIFI)
+      
         return result;
         
     }
@@ -27,7 +29,8 @@ export async function filterData(dataSaved:any,keysBLE:any,keysWIFI:any){
         // keysBLE ,keysWIFI
         let wifiData:any = [];
         let BLEData:any = [];
-
+      console.log(keysBLE);
+      
       // getting the keys and values together in BLE ----------------------------------------
 
       for(let i = 0;i < filteredBLE.length; i++){

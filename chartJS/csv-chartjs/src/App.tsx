@@ -5,6 +5,8 @@ import { Doughnut } from "react-chartjs-2";
 import BarChart from "./components/BarChart";
 import { Chart, registerables } from "chart.js";
 import Papa from "papaparse";
+import { filterData } from "./features/filter";
+import createChartData from "./features/chartData";
 import { ListFormat } from "typescript";
 import { FileHandle } from "fs/promises";
 const allowedExtensions = ["csv"];
@@ -16,7 +18,10 @@ function App() {
   const [keysOfObj, setKeysOfObj] = useState<any>([]);
   const [dataSaved, setDataSaved] = useState<any>([]);
   const [keysWIFI , setKeysWIFI] = useState<any>([])
-  const [keysBLE , setKeysBLE ] = useState<any>([])
+  const [keysBLE , setKeysBLE ] = useState<any>([]);
+  let [chartdata,setChartData] =useState<any>();
+  let [dataWifi, setDataWifi] = useState<any>([]);
+  let [dataBLE , setDataBLE] = useState<any>([]);
 
   
 //   grossaryList = {
@@ -48,6 +53,7 @@ function App() {
 
     setKeysWIFI(tempWifi)
     setKeysBLE(tempBLE)
+    return {tempWifi,tempBLE}
   }
 
   
@@ -65,7 +71,7 @@ function App() {
         const list: any = results.data;
         
         let newData = [];
-
+        let keys:any = [];
         for (let i = 0; i < list.length; i++) {
           if (i === 0) {
             Object.keys(list[i]).map((obj) => {
@@ -80,10 +86,39 @@ function App() {
         
         
          
-        await handleFilter()  
+        const {tempWifi,tempBLE} = await handleFilter()
+
         setDataSaved(newData);
         
         setFileAdded(true);
+        newData.length = 300;
+
+       const result = await filterData(newData,tempBLE,tempWifi)
+
+       for(let field of result.BLEData){
+          field.date.seconds = parseInt(field.date.seconds)
+          
+       }
+       for(let field of result.wifiData){
+        field.date.seconds = parseInt(field.date.seconds)
+      }
+       console.log(result);
+       console.log(result.wifiData);
+       console.log(result.BLEData);
+       
+       const wifiList = result.wifiData
+       const bleList = result.BLEData;
+
+       setDataBLE(bleList)
+       setDataWifi(wifiList)
+        
+
+      
+       const data = await createChartData(bleList)
+       console.log(data);
+       setChartData(data)
+        // await setChartData(data);
+       
       },
     });
   }
@@ -91,7 +126,7 @@ function App() {
   return (
     <div className="App">
       {fileAdded ? (
-        <BarChart dataSaved={dataSaved} keysWIFI={keysWIFI} keysBLE={keysBLE} keysOfObj={keysOfObj} />
+        <BarChart dataSaved={dataSaved} chartdata={chartdata} keysWIFI={keysWIFI} keysBLE={keysBLE} keysOfObj={keysOfObj} />
       ) : null}
 
       {fileAdded ? null : (

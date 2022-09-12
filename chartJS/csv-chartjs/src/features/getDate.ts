@@ -1,6 +1,6 @@
- const getDate = (unx:number) => {
+ const getDate = (unix_timestamp:number) => {
 
-    let unix_timestamp = unx
+    
     let date = new Date(unix_timestamp * 1000);
     let year = date.getFullYear();
     let month = date.getMonth()+1;
