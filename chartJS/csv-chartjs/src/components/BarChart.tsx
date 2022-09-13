@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Papa from "papaparse";
 // import CSVDownloader from "./CSVDownloader";
-import createChartData from "../features/chartData";
+import createChartData, {  handleByTime } from "../features/chartData";
 import { Bar, getElementAtEvent, Doughnut } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import "../style/style.scss";
@@ -26,6 +26,7 @@ interface BarChartProps {
 const BarChart = (props: BarChartProps) => {
 
   let { dataSaved, keysOfObj,keysBLE ,keysWIFI,chartdata} = props;
+
 
   
   // console.log(keysOfObj);
@@ -158,7 +159,7 @@ dataSaved.length = 50;
     setWifiBLE(!wifiBLE)
 
   }
-
+ 
   return (
     <>
       <div className="chart" id="chartImg">
@@ -169,11 +170,21 @@ dataSaved.length = 50;
           data={wifiBLE?wifidata:bledata}
           options={{
             maintainAspectRatio: false,
-            scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
+            responsive: true,
+            scales: {
+              x: {
+                stacked: true,
+              },
+              y: {
+                stacked: true
+              }
+            }
+            // scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
           }}
         />
       
       </div>
+
       <button name="changeBLE" onClick={changeBLE}>{wifiBLE?"BLE":"WIFI"}</button>
       {/* <Form
         userData={userData}

@@ -6,8 +6,8 @@
     let month = date.getMonth()+1;
     let day = date.getDate();
     let hours = date.getHours();
-    let minutes = "0" + date.getMinutes();
-    let seconds = "0" + date.getSeconds();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
     
     const dateFound = {year,month,day,hours,minutes,seconds}
     

@@ -9,6 +9,7 @@ import { filterData } from "./features/filter";
 import createChartData from "./features/chartData";
 import { ListFormat } from "typescript";
 import { FileHandle } from "fs/promises";
+import  handleByTime from './features/chartData'
 const allowedExtensions = ["csv"];
 
 function App() {
@@ -79,7 +80,7 @@ function App() {
         
         setFileAdded(true);
 
-        newData.length = 300;
+        newData.length = 500;
 
        const result = await filterData(newData,tempBLE,tempWifi)
 
@@ -103,10 +104,10 @@ function App() {
       console.log(wifiList);
       
       
-       const bleData = await createChartData(bleList)
-       const wifiData = await createChartData(wifiList)
+      //  const bleData = await createChartData(bleList)
+       const wifiData = await  handleByTime(wifiList)
       
-       setChartData({wifiData,bleData})
+       setChartData(wifiData)
         // await setChartData(data);
        
       },
