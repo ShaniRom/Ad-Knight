@@ -170,16 +170,16 @@ dataSaved.length = 50;
           data={wifiBLE?wifidata:bledata}
           options={{
             maintainAspectRatio: false,
-            responsive: true,
-            scales: {
-              x: {
-                stacked: true,
-              },
-              y: {
-                stacked: true
-              }
-            }
-            // scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
+            //responsive: true,
+            // scales: {
+            //   x: {
+            //     stacked: true,
+            //   },
+            //   y: {
+            //     stacked: true
+            //   }
+            // }
+             scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
           }}
         />
       
