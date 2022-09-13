@@ -18,7 +18,7 @@ interface BarChartProps {
   keysBLE:Array<any>
   keysOfObj: Array<any>;
   keysWIFI: Array<any>;
-  chartdata:Object;
+  chartdata:any;
 }
 
 
@@ -44,6 +44,7 @@ dataSaved.length = 50;
   let [chartClicked, setChartClicked] = useState(false);
   let [years, setYears] = useState<any>({});
   let [choseYears, setChoseYears] = useState(false);
+  const [wifiBLE,setWifiBLE] = useState(false)
   let [chartData, setChartData] = useState<any>();
   let [filteredData, setfilteredData] =useState<any>([]);
   const chartRef: any = useRef(null);
@@ -51,7 +52,10 @@ dataSaved.length = 50;
   
   
   
-  const [userData, setUserData] = useState<any>(chartdata);
+  const [wifidata, setwifidata] = useState<any>(chartdata.wifiData);
+  const [bledata, setbledata] = useState<any>(chartdata.bleData);
+  
+  console.log(wifiBLE);
   
 
   // set colors by values
@@ -84,6 +88,7 @@ dataSaved.length = 50;
 
   // get chart data for table
 
+
   const getChart = async (ev: any) => {
     // console.log(ev);
     const chosenChart = getElementAtEvent(chartRef.current, ev);
@@ -110,12 +115,12 @@ dataSaved.length = 50;
 
 
   function handleDownload(CSVdata: any) {
-    console.log(userData.datasets[0].data);
-    console.log(userData.labels);
+    console.log(wifidata.datasets[0].data);
+    console.log(wifidata.labels);
    
 
-    const dataTemp = userData.labels.map((year: any, i: number) => {
-      return { mam: userData.datasets[0].data[i], Year: year };
+    const dataTemp = wifidata.labels.map((year: any, i: number) => {
+      return { mam: wifidata.datasets[0].data[i], Year: year };
     });
 
     console.log(dataTemp);
@@ -149,6 +154,11 @@ dataSaved.length = 50;
     console.log(link);
   }
 
+  async function changeBLE(){
+    setWifiBLE(!wifiBLE)
+
+  }
+
   return (
     <>
       <div className="chart" id="chartImg">
@@ -156,7 +166,7 @@ dataSaved.length = 50;
           style={{ width: 500, height: 350 }}
           ref={chartRef}
           onClick={getChart}
-          data={choseYears?years:userData}
+          data={wifiBLE?wifidata:bledata}
           options={{
             maintainAspectRatio: false,
             scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
@@ -164,7 +174,7 @@ dataSaved.length = 50;
         />
       
       </div>
-      
+      <button name="changeBLE" onClick={changeBLE}>{wifiBLE?"BLE":"WIFI"}</button>
       {/* <Form
         userData={userData}
         setYears={setYears}
@@ -178,14 +188,7 @@ dataSaved.length = 50;
         keysOfObj={keysOfObj}
       />
 
-      {/* <div className="btns">
-        {keysOfObj.map((title, i) => {
-          return (
-            <button className="btns-btn" key={i} id={title} onClick={setLabel}>
-              {title}
-            </button>
-          );
-        })}*/}
+      
 
       {/* </div>  */}
       {/* <CSVLink data={dataSaved}>Export CSV</CSVLink>; */}

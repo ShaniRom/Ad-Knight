@@ -23,19 +23,6 @@ function App() {
   let [dataWifi, setDataWifi] = useState<any>([]);
   let [dataBLE , setDataBLE] = useState<any>([]);
 
-  
-//   grossaryList = {
-//     'bread': 1,
-//     'apple': 6,
-//     'milk': 1,
-//     'orange': 3,
-//     'broccoli': 2
-//    }
-// return Object.entries(grossaryList).sort((a,b) => b[1]-a[1])
-// //=> 
-// [['apple', 6],['orange', 3],['broccoli', 2],['bread',1],['milk', 1]]
-
-
   function handleFilter(){
     const tempWifi:any = []
     const tempBLE:any = []
@@ -91,6 +78,7 @@ function App() {
         setDataSaved(newData);
         
         setFileAdded(true);
+
         newData.length = 300;
 
        const result = await filterData(newData,tempBLE,tempWifi)
@@ -109,14 +97,16 @@ function App() {
        const wifiList = result.wifiData
        const bleList = result.BLEData;
 
-       setDataBLE(bleList)
-       setDataWifi(wifiList)
-        
-
+       setDataBLE(bleList);
+       setDataWifi(wifiList);
+      console.log(bleList);
+      console.log(wifiList);
       
-       const data = await createChartData(bleList)
-       console.log(data);
-       setChartData(data)
+      
+       const bleData = await createChartData(bleList)
+       const wifiData = await createChartData(wifiList)
+      
+       setChartData({wifiData,bleData})
         // await setChartData(data);
        
       },
@@ -126,7 +116,7 @@ function App() {
   return (
     <div className="App">
       {fileAdded ? (
-        <BarChart dataSaved={dataSaved} chartdata={chartdata} keysWIFI={keysWIFI} keysBLE={keysBLE} keysOfObj={keysOfObj} />
+        <BarChart dataSaved={dataSaved} chartdata={chartdata} keysWIFI={dataBLE} keysBLE={keysBLE} keysOfObj={keysOfObj} />
       ) : null}
 
       {fileAdded ? null : (

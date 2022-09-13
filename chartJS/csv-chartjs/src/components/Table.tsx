@@ -27,6 +27,7 @@ if(chartClicked){
                 <thead className='table-thead tableElms'>
                     <tr className='table-tr tableElms'> 
                         <th className='table-th tableElms'>Year</th>
+                        
                         {monthsList.map((month:any,i:any) => {
                             return (
                                 <th key={i} className='table-th tableElms'>{month}</th>
