@@ -104,10 +104,10 @@ function App() {
       console.log(wifiList);
       
       
-      //  const bleData = await createChartData(bleList)
-       const wifiData = await  handleByTime(wifiList)
+       const bleData = await createChartData(bleList)
+       const wifiData = await  createChartData(wifiList)
       
-       setChartData(wifiData)
+       setChartData({wifiData,bleData})
         // await setChartData(data);
        
       },

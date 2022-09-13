@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Papa from "papaparse";
 // import CSVDownloader from "./CSVDownloader";
-import createChartData, {  handleByTime } from "../features/chartData";
+import createChartData from "../features/chartData";
 import { Bar, getElementAtEvent, Doughnut } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import "../style/style.scss";
