@@ -80,7 +80,7 @@ function App() {
         
         setFileAdded(true);
 
-        newData.length = 500;
+        newData.length = 300;
 
        const result = await filterData(newData,tempBLE,tempWifi)
 
