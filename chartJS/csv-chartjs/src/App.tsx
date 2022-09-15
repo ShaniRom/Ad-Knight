@@ -8,8 +8,8 @@ import Papa from "papaparse";
 import { filterData } from "./features/filter";
 import createChartData from "./features/chartData";
 import { ListFormat } from "typescript";
-import { FileHandle } from "fs/promises";
-import  handleByTime from './features/chartData'
+// import { FileHandle } from "fs/promises";
+import {filterByMac1} from './features/filter'
 const allowedExtensions = ["csv"];
 
 function App() {
@@ -80,7 +80,7 @@ function App() {
         
         setFileAdded(true);
 
-        newData.length = 300;
+         newData.length = 100;
 
        const result = await filterData(newData,tempBLE,tempWifi)
 
@@ -91,23 +91,26 @@ function App() {
        for(let field of result.wifiData){
         field.date.seconds = parseInt(field.date.seconds)
       }
-       console.log(result);
-       console.log(result.wifiData);
-       console.log(result.BLEData);
+      //  console.log(result);
+      //  console.log(result.wifiData);
+      //  console.log(result.BLEData);
        
        const wifiList = result.wifiData
        const bleList = result.BLEData;
-
+       
+       
        setDataBLE(bleList);
        setDataWifi(wifiList);
       console.log(bleList);
       console.log(wifiList);
       
-      
        const bleData = await createChartData(bleList)
        const wifiData = await  createChartData(wifiList)
+
       
+
        setChartData({wifiData,bleData})
+       console.log(wifiData)
         // await setChartData(data);
        
       },
