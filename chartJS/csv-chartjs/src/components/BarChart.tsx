@@ -8,39 +8,27 @@ import "../style/style.scss";
 import { setDatasets } from "react-chartjs-2/dist/utils";
 import {filterData} from '../features/filter'
 import Table from "./Table";
-import Form from "./Form";
 import {getColors} from '../features/colors'
+import ChangeLabels from "./ChangeLabels";
 Chart.register(...registerables);
 
 
 interface BarChartProps {
   dataSaved: any;
-  keysBLE:Array<any>
-  keysOfObj: Array<any>;
-  keysWIFI: Array<any>;
   chartdata:any;
+  dataWifi:Array<any>;
+  dataBLE:Array<any>;
+  
 }
 
 
 
 const BarChart = (props: BarChartProps) => {
 
-  let { dataSaved, keysOfObj,keysBLE ,keysWIFI,chartdata} = props;
+  const { dataSaved,chartdata,dataWifi,dataBLE} = props;
 
-
-  
-  // console.log(keysOfObj);
-  
-dataSaved.length = 500;
-
-
-// console.log(dataSaved);
-
-  let [CSVdata, setCSVdata] = useState(dataSaved);
-  let [dataSetData,setdataSetsData] = useState("rssi_0")
+  let [CSVdata, setCSVdata] = useState(dataSaved);  
   let [Label, setChosenLabel] = useState();
-  let [dataWifi, setDataWifi] = useState<any>([]);
-  let [dataBLE , setDataBLE] = useState<any>([]); 
   let [backgroundcolor, setBackGroundColor] = useState<any>([]);
   let [chartClicked, setChartClicked] = useState(false);
   let [years, setYears] = useState<any>({});
@@ -50,20 +38,15 @@ dataSaved.length = 500;
   let [filteredData, setfilteredData] =useState<any>([]);
   const chartRef: any = useRef(null);
 
- 
-  
-  
   const [wifidata, setwifidata] = useState<any>(chartdata.wifiData);
   const [bledata, setbledata] = useState<any>(chartdata.bleData);
   
-  console.log(wifiBLE);
-  
-
   // set colors by values
   useEffect(() => {
     (async () => {
       getColors(dataSaved).then((result) => {
-        const colors = result.backGroundColor;
+        const colors = result;
+        
         colors.map((color:any) => {
          backgroundcolor.push(color) 
         })
@@ -72,23 +55,14 @@ dataSaved.length = 500;
        })
        
         
-      //  setUserData
-      //  console.log(result);
-      //  const rssi = result.BLEData.rssi_0 * -1;
-      //  const sec:any = "seconds"
-      //  const newData = await createChartData(result.BLEData,sec,rssi)
-      //  setUserData(newData);
+      
        
     })();
   
     
   }, []);
 
-
-       
-
   // get chart data for table
-
 
   const getChart = async (ev: any) => {
     // console.log(ev);
@@ -99,8 +73,6 @@ dataSaved.length = 500;
     setChartClicked(true);
   };
 
-  
-
   async function getChartData(index: any) {
     
     let chartData;
@@ -110,10 +82,7 @@ dataSaved.length = 500;
        chartData = CSVdata[index];
     }
     setChartData(chartData);
-    // console.log(chartData);
   }
-
-
 
   function handleDownload(CSVdata: any) {
     console.log(wifidata.datasets[0].data);
@@ -164,16 +133,16 @@ dataSaved.length = 500;
     <>
       <div className="chart" id="chartImg">
         <Line 
-          style={{ width: 500, height: 350 }}
+          style={{ width: 500, height: 500 , opacity:0.8}}
           ref={chartRef}
           onClick={getChart}
           data={wifiBLE?wifidata:bledata}
           options={{
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             responsive: true,
             plugins: {
               legend: {
-                position: 'top' as const,
+                position: 'right' as const,
               },
               title: {
                 display: true,
@@ -184,22 +153,17 @@ dataSaved.length = 500;
         />
       
       </div>
-
+      {/* change between ble and wifi button */}
       <button name="changeBLE" onClick={changeBLE}>{wifiBLE?"BLE":"WIFI"}</button>
-      {/* <Form
-        userData={userData}
-        setYears={setYears}
-        dataSaved={dataSaved}
-        setChoseYears={setChoseYears}
-        setfilteredData={setfilteredData}
-      /> */}
-      <Table
+      
+      {/* <Table
         chartClicked={chartClicked}
         chartData={chartData}
         keysOfObj={keysOfObj}
-      />
+      /> */}
 
-      
+      <ChangeLabels dataWifi={dataWifi} dataBLE={dataBLE} wifiBLE={wifiBLE} setwifidata={setwifidata} 
+      setbledata={setbledata} wifidata={wifidata} bledata={bledata}/>
 
       {/* </div>  */}
       {/* <CSVLink data={dataSaved}>Export CSV</CSVLink>; */}
@@ -207,7 +171,9 @@ dataSaved.length = 500;
         Download To CSV
       </button>
       <button onClick={handleDownloadToImg}>Download To Image</button>
+      
     </>
+    
   );
 };
 

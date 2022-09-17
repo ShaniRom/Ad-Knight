@@ -9,7 +9,7 @@ import { filterData } from "./features/filter";
 import createChartData from "./features/chartData";
 import { ListFormat } from "typescript";
 // import { FileHandle } from "fs/promises";
-import {filterByMac1} from './features/filter'
+import ChangeLabels from './components/ChangeLabels'
 const allowedExtensions = ["csv"];
 
 function App() {
@@ -71,46 +71,31 @@ function App() {
           
           newData.push(list[i]);
         }
-        
-        
-         
         const {tempWifi,tempBLE} = await handleFilter()
 
+        
+        
         setDataSaved(newData);
         
         setFileAdded(true);
 
-         newData.length = 100;
+         newData.length = 500;
 
        const result = await filterData(newData,tempBLE,tempWifi)
-
-       for(let field of result.BLEData){
-          field.date.seconds = parseInt(field.date.seconds)
-          
-       }
-       for(let field of result.wifiData){
-        field.date.seconds = parseInt(field.date.seconds)
-      }
-      //  console.log(result);
-      //  console.log(result.wifiData);
-      //  console.log(result.BLEData);
-       
+      
+       console.log(result);
        const wifiList = result.wifiData
        const bleList = result.BLEData;
        
        
-       setDataBLE(bleList);
-       setDataWifi(wifiList);
-      console.log(bleList);
-      console.log(wifiList);
-      
-       const bleData = await createChartData(bleList)
-       const wifiData = await  createChartData(wifiList)
+       await setDataBLE(bleList);
+       await setDataWifi(wifiList);
 
-      
+       const bleData = await createChartData(bleList,"rssi_0")
+       const wifiData = await  createChartData(wifiList,"rssi_0")
 
        setChartData({wifiData,bleData})
-       console.log(wifiData)
+       
         // await setChartData(data);
        
       },
@@ -119,8 +104,9 @@ function App() {
 
   return (
     <div className="App">
+
       {fileAdded ? (
-        <BarChart dataSaved={dataSaved} chartdata={chartdata} keysWIFI={dataBLE} keysBLE={keysBLE} keysOfObj={keysOfObj} />
+        <BarChart dataSaved={dataSaved} chartdata={chartdata} dataWifi={dataWifi} dataBLE={dataBLE}/>
       ) : null}
 
       {fileAdded ? null : (
