@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import Papa from "papaparse";
 // import CSVDownloader from "./CSVDownloader";
-import createChartData, {  handleByTime } from "../features/chartData";
-import { Bar, getElementAtEvent, Doughnut } from "react-chartjs-2";
+import createChartData from "../features/chartData";
+import { Line , getElementAtEvent, Doughnut } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import "../style/style.scss";
 import { setDatasets } from "react-chartjs-2/dist/utils";
@@ -31,7 +31,7 @@ const BarChart = (props: BarChartProps) => {
   
   // console.log(keysOfObj);
   
-dataSaved.length = 50;
+dataSaved.length = 500;
 
 
 // console.log(dataSaved);
@@ -50,7 +50,7 @@ dataSaved.length = 50;
   let [filteredData, setfilteredData] =useState<any>([]);
   const chartRef: any = useRef(null);
 
-  
+ 
   
   
   const [wifidata, setwifidata] = useState<any>(chartdata.wifiData);
@@ -163,7 +163,7 @@ dataSaved.length = 50;
   return (
     <>
       <div className="chart" id="chartImg">
-        <Bar
+        <Line 
           style={{ width: 500, height: 350 }}
           ref={chartRef}
           onClick={getChart}
@@ -171,15 +171,15 @@ dataSaved.length = 50;
           options={{
             maintainAspectRatio: false,
             responsive: true,
-            scales: {
-              x: {
-                stacked: true,
+            plugins: {
+              legend: {
+                position: 'top' as const,
               },
-              y: {
-                stacked: true
-              }
-            }
-            // scales: { x: { beginAtZero: true }, y: { beginAtZero: true } },
+              title: {
+                display: true,
+                text: 'Chart.js Line Chart',
+              },
+            },
           }}
         />
       

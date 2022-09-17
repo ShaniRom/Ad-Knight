@@ -1,94 +1,38 @@
-import { timeStamp } from "console"
-
- 
+import { filterByMac1 } from "./filter";
+import { getColors } from "./colors";
+import {findTimeFrame} from './timeRange'
 //  backgroundcolor:any
- const createChartData = (someData:any) => {
-   const stuff= handleByTime(someData)
-    const data = {
-        labels: someData.map((data:any) => data["date"]["seconds"]),
-        datasets: [
-          {
-            label: "negative rssi",
-            data: someData.map((data: any) => data["rssi_0"] * -1),
-            backgroundColor: (["green" , "blue"]),
-          },
-
-        ],
-      }
-      return data
-}
-
- 
-
-export const handleByTime = (someData:any) => {
-  
-  let tempHours=someData[0].date.hours;
-  let tempMins=someData[0].date.minutes;
-  let tempSecs=someData[0].date.seconds;
-  let count=0;
-  let time=[];
- 
-  for (let field of someData){
-    if (tempSecs!==field.date.seconds){
-      tempSecs=field.date.seconds
-      time.push(field.date)
-      count++
-    }
-    if (tempMins!==field.date.minutes){
-      tempMins=field.date.minutes
-      time.push(field.date)
-      count++
-    }
-     
-    if (tempHours!==field.date.hours){
-      tempHours=field.date.hours
-       time.push(field.date)
-      count++
-      
-    }
-    
-   
-
-  }
- console.log(time)
-  console.log(count)
-  console.log(tempHours,tempMins,tempSecs)
+const createChartData = async (someData: any) => {
+  const dataSetList = await filterByMac1(someData);
+  const labelsList= await findTimeFrame(someData)
+  console.log(labelsList)
+  console.log(dataSetList)
+  const backGroundColor = await getColors(dataSetList);
   const data = {
-      labels: time,
-      datasets: [
-        {
-          label: "1",
-          data: time.map((data: any) => data["rssi_0"] * -1),
-          backgroundColor: (["green" , "blue"]),
-        },
-        {
-          label: "2",
-          data: someData.map((data: any) => data["rssi_0"] * -1),
-          backgroundColor: (["green" , "blue"]),
-        },
-        {
-          label: "3",
-          data: someData.map((data: any) => data["rssi_0"] * -1),
-          backgroundColor: (["green" , "blue"]),
-        },
+    labels: labelsList.map((data: any) => data["date"]["seconds"]),
+    datasets: dataSetList.map((mac1: any) => {
+      return {
+        label: mac1.mac1Value,
+        data:  mac1.objArray.map((data: any) => data["rssi_0"]),
+        borderColor: backGroundColor.map((color: any) => color),
+        backgroundColor: backGroundColor.map((color: any) => color),
+      };
+    }),
 
-      ]
-        // time.map(timeStamp=>{
-        //     console.log(timeStamp)
-        //   return (
-        //   {
-        //     label:timeStamp,
-        //     data: someData.map((data: any) => data["rssi_0"] * -1),
-        //     backgroundColor: (["green" , "blue"])
-        //   }
-        //   )
-        // })
-        
-      
-    }
-  
-    return data
-}
+    // {
+    //   label: "negative rssi_0",
+    //   data: someData.map((data: any) => data["rssi_0"] * -1),
+    //   backgroundColor: ["green", "blue"],
+    // },
+    // {
+    //   label: "negative rssi_1",
+    //   data: someData.map((data: any) => data["rssi_1"] * -1),
+    //   backgroundColor: ["yellow", "red"],
+    // },
+  };
+
+  return data;
+};
 
 
-export default createChartData
+export default createChartData;
