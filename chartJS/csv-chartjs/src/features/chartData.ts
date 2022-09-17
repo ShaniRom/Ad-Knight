@@ -10,15 +10,16 @@ const createChartData = async (someData : any,rssi:string) => {
   const labelsList= await findTimeFrame(someData);
 
   const label = rssi;
-  console.log(label);
-  
+   console.log(label);
+ 
   const backGroundColor = await getColors(dataSetList);
   const data = {
     labels: labelsList.map((date:any) =>  ` ${date.day}/${date.month}/${date.year}` + " " +
     `${date.hours}:${date.minutes}:${date.seconds}`),
     datasets: dataSetList.map((mac1: any) => {
-      console.log(mac1.objArray);
-      
+      // console.log(mac1.objArray);
+      console.log(mac1)
+      console.log(mac1.objArray.map((data:any)=>data[`${label}`]))
       return {
         label: mac1.mac1Value + " " + label,
         data:  mac1.objArray.map((data: any) => data[`${label}`]),
@@ -28,7 +29,7 @@ const createChartData = async (someData : any,rssi:string) => {
       };
     }),
   }
-  console.log(data);
+  // console.log(data);
   
   return data;
 

@@ -1,17 +1,19 @@
 export function findTimeFrame(someData:any){
   
     let timeList:any =[];
-    console.log(someData);
+    // console.log(someData);
     
 
     someData.forEach((data: any) => {
         timeList.push(data.date);
 
       });
-      console.log(timeList);
+      // console.log(timeList);
       
       let tempDate:any = [];
       // let timeRange:any=[];
+
+      
       let tempYear = timeList[0].year;
       let tempMonth = timeList[0].month
       let tempDay = timeList[0].day;

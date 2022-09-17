@@ -49,7 +49,7 @@ function App() {
   async function getCsvFile(ev: any) {
 
     const newFile = ev.target.files[0];
-    console.log();
+  
     
         
     Papa.parse(newFile, {
@@ -83,7 +83,7 @@ function App() {
 
        const result = await filterData(newData,tempBLE,tempWifi)
       
-       console.log(result);
+      //  console.log(result);
        const wifiList = result.wifiData
        const bleList = result.BLEData;
        

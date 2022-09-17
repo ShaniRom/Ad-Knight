@@ -26,7 +26,7 @@ const {setYears,dataSaved,userData,setChoseYears,setfilteredData} = props;
        
         
         let backgroundcolor:any = []
-        console.log(tempData);
+        // console.log(tempData);
         setfilteredData(tempData)
         getColors(tempData).then((result) => {
           const colors = result          

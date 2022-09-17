@@ -85,15 +85,15 @@ const BarChart = (props: BarChartProps) => {
   }
 
   function handleDownload(CSVdata: any) {
-    console.log(wifidata.datasets[0].data);
-    console.log(wifidata.labels);
+    // console.log(wifidata.datasets[0].data);
+    // console.log(wifidata.labels);
    
 
     const dataTemp = wifidata.labels.map((year: any, i: number) => {
       return { mam: wifidata.datasets[0].data[i], Year: year };
     });
 
-    console.log(dataTemp);
+    // console.log(dataTemp);
 
     const templist = dataTemp.map((obj: any, i: number) => {
       return {
@@ -121,7 +121,7 @@ const BarChart = (props: BarChartProps) => {
     link.download = "chart.png";
     link.href = chartRef.current.toBase64Image("image/png", 1);
     link.click();
-    console.log(link);
+    
   }
 
   async function changeBLE(){
@@ -142,7 +142,7 @@ const BarChart = (props: BarChartProps) => {
             responsive: true,
             plugins: {
               legend: {
-                position: 'right' as const,
+                position: 'top' as const,
               },
               title: {
                 display: true,
