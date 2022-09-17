@@ -28,7 +28,7 @@ const BarChart = (props: BarChartProps) => {
   const { dataSaved,chartdata,dataWifi,dataBLE} = props;
 
   let [CSVdata, setCSVdata] = useState(dataSaved);  
-  let [Label, setChosenLabel] = useState();
+  let [changeLabel, setChangedLabel] = useState(false);
   let [backgroundcolor, setBackGroundColor] = useState<any>([]);
   let [chartClicked, setChartClicked] = useState(false);
   let [years, setYears] = useState<any>({});
@@ -60,7 +60,7 @@ const BarChart = (props: BarChartProps) => {
     })();
   
     
-  }, []);
+  }, [changeLabel]);
 
   // get chart data for table
 
@@ -163,7 +163,7 @@ const BarChart = (props: BarChartProps) => {
       /> */}
 
       <ChangeLabels dataWifi={dataWifi} dataBLE={dataBLE} wifiBLE={wifiBLE} setwifidata={setwifidata} 
-      setbledata={setbledata} wifidata={wifidata} bledata={bledata}/>
+      setbledata={setbledata} wifidata={wifidata} bledata={bledata} changeLabel={changeLabel} setChangedLabel={setChangedLabel}/>
 
       {/* </div>  */}
       {/* <CSVLink data={dataSaved}>Export CSV</CSVLink>; */}
