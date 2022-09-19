@@ -34,10 +34,10 @@ function App() {
     );
     const sortedBLE = Object.entries(ble).sort((a: any, b: any) => a[1] - b[1]);
 
-    sortedWIFI.map((obj) => {
+    sortedWIFI.forEach((obj) => {
       tempWifi.push(obj[0]);
     });
-    sortedBLE.map((obj) => {
+    sortedBLE.forEach((obj) => {
       tempBLE.push(obj[0]);
     });
 
@@ -46,37 +46,31 @@ function App() {
     return { tempWifi, tempBLE };
   }
 
-   function getCsvFile(ev: any) {
+  async function getCsvFile(ev: any) {
     const newFile = ev.target.files[0];
 
-    Papa.parse(newFile, {
-      header: false,
-      skipEmptyLines: true,
-      complete: ({data}) => {
+    const data = await papaparse(newFile);
 
-        const newData = data;
-       
-        const { tempWifi, tempBLE } = handleFilterHeaders(event_mapping);
+    const newData: Array<any> = data;
 
-        newData.length = 20000;
+    const { tempWifi, tempBLE } = handleFilterHeaders(event_mapping);
 
-        const result = filterData(newData, tempBLE, tempWifi);
+    newData.length = 40000;
 
-        const wifiList = result.wifiData;
-        const bleList = result.BLEData;
+    const result = filterData(newData, tempBLE, tempWifi);
 
-        
-        const bleData = createChartData(bleList, "rssi_0");
-        const wifiData = createChartData(wifiList, "rssi_0");
+    const wifiList = result.wifiData;
+    const bleList = result.BLEData;
 
-        setFileAdded(true);
-        setDataBLE(bleList);
-        setDataWifi(wifiList);
-        setChartData({ wifiData, bleData });
+    const bleData = createChartData(bleList, "rssi_0");
+    const wifiData = createChartData(wifiList, "rssi_0");
 
-        // await setChartData(data);
-      },
-    });
+    setFileAdded(true);
+    setDataBLE(bleList);
+    setDataWifi(wifiList);
+    setChartData({ wifiData, bleData });
+
+    // await setChartData(data);
   }
 
   return (
@@ -99,3 +93,15 @@ function App() {
 }
 
 export default App;
+
+function papaparse(newFile:any): Promise<Array<any>> {
+  return new Promise((resolve, reject) => {
+    Papa.parse(newFile, {
+      header: false,
+      skipEmptyLines: true,
+      complete: ({ data }) => {
+        resolve(data);
+      },
+    });
+  });
+}

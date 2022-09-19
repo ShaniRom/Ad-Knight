@@ -1,7 +1,6 @@
 import getDate from "./getDate";
 
 export function filterData(dataSaved: any, keysBLE: any, keysWIFI: any) {
-
   const filteredBLE = dataSaved.filter((objBLE: any) => {
     return objBLE[0] === "BLE";
   });
@@ -10,17 +9,12 @@ export function filterData(dataSaved: any, keysBLE: any, keysWIFI: any) {
     return objWIFI[0] === "WIFI";
   });
 
-  const result = filterWithKeys(
-    filteredBLE,
-    filteredWIFI,
-    keysBLE,
-    keysWIFI
-  );
+  const result = filterWithKeys(filteredBLE, filteredWIFI, keysBLE, keysWIFI);
 
   return result;
 }
 
- function filterWithKeys(
+function filterWithKeys(
   filteredBLE: any,
   filteredWIFI: any,
   keysBLE: any,
@@ -29,7 +23,7 @@ export function filterData(dataSaved: any, keysBLE: any, keysWIFI: any) {
   // keysBLE ,keysWIFI
   let wifiData: any = [];
   let BLEData: any = [];
-  
+
   // getting the keys and values together in BLE ----------------------------------------
 
   for (let i = 0; i < filteredBLE.length; i++) {
@@ -65,25 +59,46 @@ export function filterData(dataSaved: any, keysBLE: any, keysWIFI: any) {
 
 // -------------------------------------------------------
 
-export const filterByMac1 = (list: any) => {
-  let mac1List: any = [];
-  let tempMac1 = list[0].MAC_1;
+// export const filterByMac1 = (list: any) => {
+//   let mac1List: any = [];
+//   let tempMac1 = list[0].MAC_1;
 
-  
-  list.forEach((data: any) => {
-    mac1List.push(data.MAC_1);
+//   list.forEach((data: any) => {
+//     mac1List.push(data.MAC_1);
+//   });
+
+//   const mac1ListArray = mac1List.filter(
+//     (n: any, i: any) => mac1List.indexOf(n) === i
+//   )
+//    let allMacObj:any=[];
+//     mac1ListArray.map((mac1: any) => {
+//     const tempObj = {mac1Value:mac1,objArray:list.filter((obj: any) => obj.MAC_1 === mac1)};
+//     allMacObj.push(tempObj)
+
+//   });
+
+//   return allMacObj
+// }
+
+export const filterByMac1 = (list: Array<any>) => {
+  const mac1List = list.map((data: any) => data.MAC_1);
+
+  // const mac1ListArray = mac1List.filter(
+  //   //     (n: any, i: any) => mac1List.indexOf(n) === i
+  //   //   ).filter(
+  //   (n: any, i: any) => mac1List.indexOf(n) === i
+  // );
+  let mac1ListArray = new Set();
+  mac1List.forEach((mac1) => mac1ListArray.add(mac1));
+
+  // const mac1ListArray2 = Array.from(mac1ListArray);
+let result:any[] = [];
+  const allMacObj = mac1ListArray.forEach((mac1: any) => {
+    result = [...result,  {
+      mac1Value: mac1,
+      objArray: list.filter((obj: any) => obj.MAC_1 === mac1),
+    }];
   });
 
-  const mac1ListArray = mac1List.filter(
-    (n: any, i: any) => mac1List.indexOf(n) === i
-  )
-   let allMacObj:any=[];
-    mac1ListArray.map((mac1: any) => {
-    const tempObj = {mac1Value:mac1,objArray:list.filter((obj: any) => obj.MAC_1 === mac1)};
-    allMacObj.push(tempObj)
-   
-  });
-  
-  
-  return allMacObj
-}
+  return result;
+};
