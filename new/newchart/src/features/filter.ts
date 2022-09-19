@@ -1,6 +1,6 @@
 import getDate from "./getDate";
 
-export async function filterData(dataSaved: any, keysBLE: any, keysWIFI: any) {
+export function filterData(dataSaved: any, keysBLE: any, keysWIFI: any) {
 
   const filteredBLE = dataSaved.filter((objBLE: any) => {
     return objBLE[0] === "BLE";
@@ -10,7 +10,7 @@ export async function filterData(dataSaved: any, keysBLE: any, keysWIFI: any) {
     return objWIFI[0] === "WIFI";
   });
 
-  const result = await filterWithKeys(
+  const result = filterWithKeys(
     filteredBLE,
     filteredWIFI,
     keysBLE,
@@ -20,7 +20,7 @@ export async function filterData(dataSaved: any, keysBLE: any, keysWIFI: any) {
   return result;
 }
 
-async function filterWithKeys(
+ function filterWithKeys(
   filteredBLE: any,
   filteredWIFI: any,
   keysBLE: any,
@@ -29,7 +29,7 @@ async function filterWithKeys(
   // keysBLE ,keysWIFI
   let wifiData: any = [];
   let BLEData: any = [];
-
+  
   // getting the keys and values together in BLE ----------------------------------------
 
   for (let i = 0; i < filteredBLE.length; i++) {

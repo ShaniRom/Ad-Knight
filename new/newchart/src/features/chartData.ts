@@ -4,12 +4,12 @@ import {findTimeFrame} from './timeRange';
 
 
 
-const createChartData = async (someData : any,rssi:string) => {
+const createChartData =  (someData : any,rssi:string) => {
 
   
-  const dataSetList = await filterByMac1(someData);
-  const labelsList= await findTimeFrame(someData);
-  const backGroundColor = await getColors(dataSetList);
+  const dataSetList =  filterByMac1(someData);
+  const labelsList=  findTimeFrame(someData);
+  const backGroundColor = getColors(dataSetList);
 
 
   const label = rssi;
