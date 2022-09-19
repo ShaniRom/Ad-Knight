@@ -71,8 +71,6 @@ function App() {
         }
         const {tempWifi,tempBLE} = await handleFilter()
 
-        
-        
         setDataSaved(newData);
         
         setFileAdded(true);
@@ -88,7 +86,7 @@ function App() {
        
        await setDataBLE(bleList);
        await setDataWifi(wifiList);
-
+      
        const bleData = await createChartData(bleList,"rssi_0")
        const wifiData = await  createChartData(wifiList,"rssi_0")
 

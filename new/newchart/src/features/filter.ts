@@ -84,5 +84,6 @@ export const filterByMac1 = (list: any) => {
    
   });
   
+  
   return allMacObj
 }
